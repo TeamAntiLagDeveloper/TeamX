@@ -1,14 +1,41 @@
-﻿namespace TeamX.Shared.DTOs;
-
-public class ErembyWebhookRequest
+﻿public class ErembyWebhookRequest
 {
-    public string PaymentStatus { get; set; } = null!;
+    public string Event { get; set; } = string.Empty;
 
-    public string CustomerEmail { get; set; } = null!;
+    public string Store_Id { get; set; } = string.Empty;
 
-    public Guid ProductId { get; set; }
+    public ErembyData Data { get; set; } = new();
+}
 
-    public Guid PlanId { get; set; }
+public class ErembyData
+{
+    public string Id { get; set; } = string.Empty;
 
-    public string TransactionId { get; set; } = string.Empty;
+    public string Status { get; set; } = string.Empty;
+
+    public decimal Amount { get; set; }
+
+    public string Currency { get; set; } = string.Empty;
+
+    public ErembyCustomer Customer { get; set; } = new();
+
+    public ErembyProduct Product { get; set; } = new();
+}
+
+public class ErembyCustomer
+{
+    public string Name { get; set; } = string.Empty;
+
+    public string Email { get; set; } = string.Empty;
+
+    public string Document { get; set; } = string.Empty;
+}
+
+public class ErembyProduct
+{
+    public string Id { get; set; } = string.Empty;
+
+    public string Name { get; set; } = string.Empty;
+
+    public decimal Price { get; set; }
 }

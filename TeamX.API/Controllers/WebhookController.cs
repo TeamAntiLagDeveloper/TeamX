@@ -16,6 +16,7 @@ public class WebhookController : ControllerBase
     private readonly ApplicationDbContext _context;
     private readonly IEmailService _emailService;
 
+
     public WebhookController(
         ILicenseService licenseService,
         IOrderService orderService,
@@ -26,8 +27,8 @@ public class WebhookController : ControllerBase
         _licenseService = licenseService;
         _orderService = orderService;
         _customerService = customerService;
-        _context = context;
         _emailService = emailService;
+        _context = context;
     }
 
 
@@ -35,7 +36,12 @@ public class WebhookController : ControllerBase
     public async Task<IActionResult> Eremby(
         [FromBody] ErembyWebhookRequest request)
     {
-        if (request.PaymentStatus != "approved")
+
+        // ================================
+        // Verifica pagamento
+        // ================================
+
+        if (request.Data.Status != "approved")
         {
             return Ok(new
             {
@@ -45,10 +51,15 @@ public class WebhookController : ControllerBase
         }
 
 
-        // Verifica se esse pagamento já foi processado
-        var existingOrder = await _context.Orders
+
+        // ================================
+        // Evita duplicação
+        // ================================
+
+        var existingOrder =
+            await _context.Orders
             .FirstOrDefaultAsync(x =>
-                x.TransactionId == request.TransactionId);
+                x.TransactionId == request.Data.Id);
 
 
         if (existingOrder != null)
@@ -56,90 +67,183 @@ public class WebhookController : ControllerBase
             return Ok(new
             {
                 success = true,
-                message = "Webhook já processado"
+                message = "Venda já processada"
             });
         }
 
 
+
+        // ================================
+        // Localizar produto TeamX
+        // ================================
+
         var product =
-            await _context.Products
-            .FirstOrDefaultAsync(x =>
-                x.Id == request.ProductId);
+            await GetTeamXProduct(
+                request.Data.Product.Id);
 
 
-        var plan =
-            await _context.Plans
-            .FirstOrDefaultAsync(x =>
-                x.PlanId == request.PlanId);
 
-
-        if (product == null || plan == null)
+        if (product == null)
         {
             return BadRequest(new
             {
                 success = false,
-                message = "Produto ou plano inválido"
+                message = "Produto Ereemby não configurado"
             });
         }
+
+
+
+        // ================================
+        // Localizar plano
+        // ================================
+
+        var plan =
+            await _context.Plans
+            .FirstOrDefaultAsync(x =>
+                x.ProductId == product.Id);
+
+
+
+        if (plan == null)
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = "Plano não encontrado"
+            });
+        }
+
+
+
+
+        // ================================
+        // Criar cliente
+        // ================================
+
         var customer =
             await _customerService.GetOrCreateAsync(
-                request.CustomerEmail);
+                request.Data.Customer.Email);
 
 
 
-        var order = await _orderService.CreateAsync(
-            customer.Id,
-            product.Id,
-            plan.PlanId,
-            request.CustomerEmail,
-            request.TransactionId);
+
+        // ================================
+        // Criar pedido
+        // ================================
+
+        var order =
+            await _orderService.CreateAsync(
+                customer.Id,
+                product.Id,
+                plan.PlanId,
+                request.Data.Customer.Email,
+                request.Data.Id);
 
 
 
-        var license = await _licenseService.CreateLicenseAsync(
-            new CreateLicenseRequest
-            {
-                CustomerId = customer.Id,
-                ProductId = product.Id,
-                PlanId = plan.PlanId
-            });
+
+        // ================================
+        // Criar licença
+        // ================================
+
+        var license =
+            await _licenseService.CreateLicenseAsync(
+                new CreateLicenseRequest
+                {
+                    CustomerId = customer.Id,
+                    ProductId = product.Id,
+                    PlanId = plan.PlanId
+                });
+
+
+
+        // ================================
+        // Vincular licença ao pedido
+        // ================================
 
         await _orderService.UpdateLicenseAsync(
             order.Id,
             license.Id);
 
 
+
+
+        // ================================
+        // Enviar email
+        // ================================
+
         try
         {
             await _emailService.SendLicenseAsync(
                 new LicenseEmailRequest
                 {
-                    CustomerEmail = request.CustomerEmail,
-                    ProductName = product.Name,
-                    LicenseKey = license.Key,
-                    ExpirationDate = license.ExpiresAt,
-                    DownloadLink = "https://teamantilag.com/download/teamx",
+                    CustomerEmail =
+                        request.Data.Customer.Email,
+
+                    ProductName =
+                        product.Name,
+
+                    LicenseKey =
+                        license.Key,
+
+                    ExpirationDate =
+                        license.ExpiresAt,
+
+                    DownloadLink =
+                        "https://teamantilag.com/download/teamx",
+
                     ActivationInstructions =
                     """
-            1. Baixe o TeamX pelo link enviado.
-            2. Instale e abra o aplicativo.
-            3. Informe sua chave de licença.
-            4. Clique em ativar.
-            5. Aguarde a validação do servidor.
-            """
+                    1. Baixe o TeamX.
+                    2. Instale o aplicativo.
+                    3. Abra o TeamX.
+                    4. Informe sua chave.
+                    5. Clique em ativar.
+                    """
                 });
         }
         catch (Exception ex)
         {
             Console.WriteLine(
-                $"Erro ao enviar email: {ex.Message}");
+                $"Erro email: {ex.Message}");
         }
+
+
 
 
         return Ok(new
         {
             success = true,
+            message = "Licença criada",
             licenseKey = license.Key
         });
+    }
+
+    private async Task<TeamX.Core.Entities.Product?> GetTeamXProduct(
+        string ereembyProductId)
+    {
+        return ereembyProductId switch
+        {
+            "112169" =>
+                await _context.Products
+                .FirstOrDefaultAsync(
+                    x => x.Name == "TeamX Basic"),
+
+
+            "112170" =>
+                await _context.Products
+                .FirstOrDefaultAsync(
+                    x => x.Name == "TeamX Standard"),
+
+
+            "112171" =>
+                await _context.Products
+                .FirstOrDefaultAsync(
+                    x => x.Name == "TeamX Professional"),
+
+
+            _ => null
+        };
     }
 }
