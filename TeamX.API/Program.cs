@@ -68,7 +68,6 @@ public class Program
         builder.Services.AddScoped<ILicenseKeyGenerator, LicenseKeyGenerator>();
         builder.Services.AddScoped<ITokenService, TokenService>();
         builder.Services.AddScoped<INonceService, NonceService>(); // Implementar depois
-
         // === App ===
         var app = builder.Build();
 

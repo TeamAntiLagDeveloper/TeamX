@@ -6,7 +6,7 @@ namespace TeamX.App.Services;
 
 public static class SignatureService
 {
-    private static readonly string Secret = "MESMA_CHAVE_USADA_NO_SERVIDOR"; // Deve ser igual à do servidor
+    private static readonly string Secret = "3A8E5F91B9C4D7F2E1A65C8B34D91F77TEAMX2026SECURE9F2A1B8C";
 
     public static string GenerateSignature(SecureActivateRequest request)
     {

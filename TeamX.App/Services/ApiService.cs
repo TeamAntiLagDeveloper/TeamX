@@ -1,51 +1,145 @@
-﻿using System.Text;
+﻿using System;
+using System.Net.Http;
+using System.Text;
 using System.Text.Json;
+using System.Threading.Tasks;
 using TeamX.Shared.DTOs;
 
-namespace TeamX.App.Services;
-
-public class ApiService
+namespace TeamX.App.Services
 {
-    private readonly HttpClient _httpClient;
-
-    public ApiService()
+    public class ApiService
     {
-        _httpClient = new HttpClient
+        private readonly HttpClient _httpClient;
+
+        private const string ApiBaseUrl = "https://teamx-api.onrender.com/";
+
+        public ApiService()
         {
-            BaseAddress = new Uri("https://localhost:7291/"),
-            Timeout = TimeSpan.FromSeconds(10)
-        };
-    }
+            _httpClient = new HttpClient
+            {
+                BaseAddress = new Uri(ApiBaseUrl),
+                Timeout = TimeSpan.FromSeconds(60)
+            };
+        }
 
-    public async Task<ActivateResponse> ActivateLicenseAsync(SecureActivateRequest request)
-    {
-        var json = JsonSerializer.Serialize(request);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
-
-        var response = await _httpClient.PostAsync("api/license/activate", content);
-        var responseContent = await response.Content.ReadAsStringAsync();
-
-        return JsonSerializer.Deserialize<ActivateResponse>(responseContent,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-            ?? new ActivateResponse { Success = false, Message = "Erro de comunicação" };
-    }
-
-    public async Task<TokenValidationResponse> ValidateTokenAsync(string token, string hardwareFingerprint)
-    {
-        var request = new TokenValidationRequest
+        public async Task<ActivateResponse> ActivateLicenseAsync(SecureActivateRequest request)
         {
-            Token = token,
-            HardwareFingerprint = hardwareFingerprint
-        };
+            try
+            {
+                var json = JsonSerializer.Serialize(request);
 
-        var json = JsonSerializer.Serialize(request);
-        var content = new StringContent(json, Encoding.UTF8, "application/json");
+                using var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
 
-        var response = await _httpClient.PostAsync("api/license/validate-token", content);
-        var responseContent = await response.Content.ReadAsStringAsync();
+                var response = await _httpClient.PostAsync(
+                    "api/license/activate",
+                    content);
 
-        return JsonSerializer.Deserialize<TokenValidationResponse>(responseContent,
-            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-            ?? new TokenValidationResponse { Success = false };
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new ActivateResponse
+                    {
+                        Success = false,
+                        Message = $"Erro HTTP {(int)response.StatusCode}: {responseContent}"
+                    };
+                }
+
+                return JsonSerializer.Deserialize<ActivateResponse>(
+                           responseContent,
+                           new JsonSerializerOptions
+                           {
+                               PropertyNameCaseInsensitive = true
+                           })
+                       ?? new ActivateResponse
+                       {
+                           Success = false,
+                           Message = "Resposta inválida da API."
+                       };
+            }
+            catch (TaskCanceledException)
+            {
+                return new ActivateResponse
+                {
+                    Success = false,
+                    Message = "Tempo de conexão esgotado."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ActivateResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
+
+        public async Task<TokenValidationResponse> ValidateTokenAsync(
+            string token,
+            string hardwareFingerprint)
+        {
+            try
+            {
+                var request = new TokenValidationRequest
+                {
+                    Token = token,
+                    HardwareFingerprint = hardwareFingerprint
+                };
+
+                var json = JsonSerializer.Serialize(request);
+
+                using var content = new StringContent(
+                    json,
+                    Encoding.UTF8,
+                    "application/json");
+
+                var response = await _httpClient.PostAsync(
+                    "api/license/validate-token",
+                    content);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    return new TokenValidationResponse
+                    {
+                        Success = false,
+                        Message = $"Erro HTTP {(int)response.StatusCode}: {responseContent}"
+                    };
+                }
+
+                return JsonSerializer.Deserialize<TokenValidationResponse>(
+                           responseContent,
+                           new JsonSerializerOptions
+                           {
+                               PropertyNameCaseInsensitive = true
+                           })
+                       ?? new TokenValidationResponse
+                       {
+                           Success = false,
+                           Message = "Resposta inválida da API."
+                       };
+            }
+            catch (TaskCanceledException)
+            {
+                return new TokenValidationResponse
+                {
+                    Success = false,
+                    Message = "Tempo de conexão esgotado."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new TokenValidationResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+            }
+        }
     }
 }
