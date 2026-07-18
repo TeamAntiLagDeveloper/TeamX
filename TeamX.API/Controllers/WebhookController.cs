@@ -228,20 +228,17 @@ public class WebhookController : ControllerBase
             "112169" =>
                 await _context.Products
                 .FirstOrDefaultAsync(
-                    x => x.Name == "TeamX Basic"),
-
+                    x => x.Name == "TeamX Optimizer"),
 
             "112170" =>
                 await _context.Products
                 .FirstOrDefaultAsync(
-                    x => x.Name == "TeamX Standard"),
-
+                    x => x.Name == "TeamX Optimizer"),
 
             "112171" =>
                 await _context.Products
                 .FirstOrDefaultAsync(
-                    x => x.Name == "TeamX Professional"),
-
+                    x => x.Name == "TeamX Optimizer"),
 
             _ => null
         };
