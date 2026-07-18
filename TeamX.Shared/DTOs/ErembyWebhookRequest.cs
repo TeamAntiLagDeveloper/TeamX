@@ -1,41 +1,42 @@
-﻿public class ErembyWebhookRequest
+﻿namespace TeamX.Shared.DTOs;
+
+public class ErembyWebhookRequest
 {
-    public string Event { get; set; } = string.Empty;
+    public string Event_Name { get; set; } = "";
 
-    public string Store_Id { get; set; } = string.Empty;
+    public ErembyOrder Order { get; set; } = new();
 
-    public ErembyData Data { get; set; } = new();
+    public List<ErembyItem> Items { get; set; } = new();
 }
 
-public class ErembyData
+
+public class ErembyOrder
 {
-    public string Id { get; set; } = string.Empty;
+    public string Id { get; set; } = "";
 
-    public string Status { get; set; } = string.Empty;
+    public string Status { get; set; } = "";
 
-    public decimal Amount { get; set; }
-
-    public string Currency { get; set; } = string.Empty;
+    public string Transaction_Id { get; set; } = "";
 
     public ErembyCustomer Customer { get; set; } = new();
-
-    public ErembyProduct Product { get; set; } = new();
 }
+
 
 public class ErembyCustomer
 {
-    public string Name { get; set; } = string.Empty;
+    public string Name { get; set; } = "";
 
-    public string Email { get; set; } = string.Empty;
+    public string Email { get; set; } = "";
 
-    public string Document { get; set; } = string.Empty;
+    public string Document { get; set; } = "";
 }
 
-public class ErembyProduct
-{
-    public string Id { get; set; } = string.Empty;
-        
-    public string Name { get; set; } = string.Empty;
 
-    public decimal Price { get; set; }
+public class ErembyItem
+{
+    public long Variant_Id { get; set; }
+
+    public string Name { get; set; } = "";
+
+    public decimal Unit_Price { get; set; }
 }

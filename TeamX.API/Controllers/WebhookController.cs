@@ -88,11 +88,11 @@ public class WebhookController : ControllerBase
 
 
         Console.WriteLine("===== DADOS PROCESSADOS =====");
-        Console.WriteLine($"EVENT: {request.Event}");
-        Console.WriteLine($"STATUS: {request.Data.Status}");
-        Console.WriteLine($"TRANSACTION: {request.Data.Id}");
-        Console.WriteLine($"PRODUCT: {request.Data.Product.Id}");
-        Console.WriteLine($"EMAIL: {request.Data.Customer.Email}");
+        Console.WriteLine($"EVENT: {request.Event_Name}");
+        Console.WriteLine($"STATUS: {request.Order.Status}");
+        Console.WriteLine($"TRANSACTION: {request.Order.Transaction_Id}");
+        Console.WriteLine($"PRODUCT: {request.Items[0].Variant_Id}");
+        Console.WriteLine($"EMAIL: {request.Order.Customer.Email}");
 
 
 
@@ -101,9 +101,9 @@ public class WebhookController : ControllerBase
         // ==================================
 
         if (
-            request.Data.Status != "approved" &&
-            request.Data.Status != "paid" &&
-            request.Data.Status != "completed"
+            request.Order.Status != "approved" &&
+            request.Order.Status != "paid" &&
+            request.Order.Status != "completed"
         )
         {
             return Ok(new
@@ -122,7 +122,7 @@ public class WebhookController : ControllerBase
         var existingOrder =
             await _context.Orders
             .FirstOrDefaultAsync(x =>
-                x.TransactionId == request.Data.Id);
+                x.TransactionId == request.Order.Transaction_Id);
 
 
 
@@ -143,7 +143,7 @@ public class WebhookController : ControllerBase
 
         var product =
             await GetTeamXProduct(
-                request.Data.Product.Id);
+                request.Items[0].Variant_Id.ToString());
 
 
 
@@ -164,7 +164,7 @@ public class WebhookController : ControllerBase
 
         var plan =
             await GetTeamXPlan(
-                request.Data.Product.Id);
+                request.Items[0].Variant_Id.ToString());
 
 
 
@@ -185,7 +185,7 @@ public class WebhookController : ControllerBase
 
         var customer =
             await _customerService.GetOrCreateAsync(
-                request.Data.Customer.Email);
+                request.Order.Customer.Email);
 
 
 
@@ -198,8 +198,8 @@ public class WebhookController : ControllerBase
                 customer.Id,
                 product.Id,
                 plan.PlanId,
-                request.Data.Customer.Email,
-                request.Data.Id);
+                request.Order.Customer.Email,
+                request.Order.Transaction_Id);
 
 
 
@@ -233,7 +233,7 @@ public class WebhookController : ControllerBase
             await _emailService.SendLicenseAsync(
                 new LicenseEmailRequest
                 {
-                    CustomerEmail = request.Data.Customer.Email,
+                    CustomerEmail = request.Order.Customer.Email,
 
                     ProductName = product.Name,
 
