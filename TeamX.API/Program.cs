@@ -8,6 +8,7 @@ using TeamX.Data.Context;
 using TeamX.Data.Repositories;
 using TeamX.Security.Licensing;
 using Microsoft.AspNetCore.HttpOverrides;
+using Resend;
 
 namespace TeamX.API;
 
@@ -17,6 +18,13 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        builder.Services.AddHttpClient<ResendClient>();
+
+        builder.Services.Configure<ResendClientOptions>(
+            builder.Configuration.GetSection("Resend"));
+
+        builder.Services.AddTransient<IResend, ResendClient>();
+        builder.Services.AddScoped<IEmailService, EmailService>();
         builder.Configuration
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
