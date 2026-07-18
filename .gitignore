@@ -1,0 +1,22 @@
+# Visual Studio
+.vs/
+**/.vs/
+
+# Build
+bin/
+obj/
+
+# User files
+*.user
+*.suo
+*.sln.docstates
+
+# Logs
+*.log
+
+# Publish
+publish/
+
+# Environment
+.env
+appsettings.Development.json

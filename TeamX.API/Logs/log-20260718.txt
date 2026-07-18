@@ -1,0 +1,750 @@
+2026-07-18 11:51:41.673 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 11:51:41.717 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 11:51:41.816 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 11:51:41.817 -03:00 [INF] Hosting environment: Development
+2026-07-18 11:51:41.818 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 11:52:25.160 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 11:52:25.197 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 11:52:25.301 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 11:52:25.301 -03:00 [INF] Hosting environment: Development
+2026-07-18 11:52:25.302 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:05:43.898 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:05:43.937 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:05:44.045 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:05:44.046 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:05:44.046 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:31:07.581 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:31:07.618 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:31:07.719 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:31:07.730 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:31:07.730 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:31:55.936 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:31:55.976 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:31:56.083 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:31:56.086 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:31:56.087 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:32:26.040 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:32:26.081 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:32:26.190 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:32:26.190 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:32:26.191 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:33:24.867 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:33:24.919 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:33:25.021 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:33:25.022 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:33:25.023 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:36:16.657 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:36:16.696 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:36:16.792 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:36:16.793 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:36:16.794 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:36:25.662 -03:00 [INF] Request starting HTTP/1.1 POST https://localhost:7291/api/license/activate - application/json; charset=utf-8 381
+2026-07-18 12:36:25.707 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.LicenseController.Activate (TeamX.API)'
+2026-07-18 12:36:25.730 -03:00 [INF] Route matched with {action = "Activate", controller = "License"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Activate(TeamX.Shared.DTOs.SecureActivateRequest) on controller TeamX.API.Controllers.LicenseController (TeamX.API).
+2026-07-18 12:36:25.992 -03:00 [INF] Executing BadRequestObjectResult, writing value of type 'TeamX.Shared.DTOs.ActivateResponse'.
+2026-07-18 12:36:26.007 -03:00 [INF] Executed action TeamX.API.Controllers.LicenseController.Activate (TeamX.API) in 272.8794ms
+2026-07-18 12:36:26.010 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.LicenseController.Activate (TeamX.API)'
+2026-07-18 12:36:26.013 -03:00 [INF] Request finished HTTP/1.1 POST https://localhost:7291/api/license/activate - 400 null application/json; charset=utf-8 352.6512ms
+2026-07-18 12:36:36.198 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:36:36.236 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:36:36.334 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:36:36.335 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:36:36.335 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 12:40:49.182 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 12:40:49.218 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 12:40:49.313 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 12:40:49.314 -03:00 [INF] Hosting environment: Development
+2026-07-18 12:40:49.314 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 13:35:40.523 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 13:35:40.562 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 13:35:40.662 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 13:35:40.663 -03:00 [INF] Hosting environment: Development
+2026-07-18 13:35:40.664 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 13:35:47.092 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 13:35:47.114 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 21.2969ms
+2026-07-18 13:35:47.168 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 13:35:47.214 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 13:35:47.282 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 114.1004ms
+2026-07-18 13:35:47.300 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 304 null null 86.3094ms
+2026-07-18 13:37:36.455 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 185
+2026-07-18 13:37:36.468 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 13:37:36.496 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 13:37:38.231 -03:00 [INF] Executed DbCommand (68ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 13:37:38.359 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 13:37:38.425 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 13:37:38.572 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 13:37:38.637 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7);
+2026-07-18 13:37:38.660 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 13:37:38.691 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 13:37:38.754 -03:00 [INF] Executed DbCommand (22ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 13:37:38.790 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 13:37:38.819 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 13:37:38.963 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 13:37:38.973 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 2473.2256ms
+2026-07-18 13:37:38.974 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 13:37:38.981 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 2526.6053ms
+2026-07-18 13:56:01.316 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 13:56:01.366 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 13:56:02.154 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 13:56:02.156 -03:00 [INF] Hosting environment: Development
+2026-07-18 13:56:02.158 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 13:57:01.789 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 13:57:01.997 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 200 null text/html;charset=utf-8 209.0313ms
+2026-07-18 13:57:02.009 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 13:57:02.012 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 13:57:02.012 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 13:57:02.015 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 13:57:02.012 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 13:57:02.025 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 200 null application/javascript;charset=utf-8 10.1291ms
+2026-07-18 13:57:02.038 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 200 152 text/css 25.7266ms
+2026-07-18 13:57:02.048 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 13:57:02.048 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 13:57:02.057 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 200 77731 text/javascript 44.4253ms
+2026-07-18 13:57:02.051 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 200 26499 text/css 42.1791ms
+2026-07-18 13:57:02.069 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 20.6886ms
+2026-07-18 13:57:02.075 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 200 421507 text/javascript 62.6009ms
+2026-07-18 13:57:02.175 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 125.5464ms
+2026-07-18 13:57:02.316 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 13:57:02.317 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 13:57:02.342 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 200 628 image/png 25.111ms
+2026-07-18 13:57:02.351 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 35.1082ms
+2026-07-18 13:57:42.952 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 13:57:42.963 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 13:57:42.988 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 13:57:44.659 -03:00 [INF] Executed DbCommand (71ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 13:57:44.710 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 13:57:44.826 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 13:57:44.887 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 13:57:45.034 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 13:57:45.099 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 13:57:45.122 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 13:57:45.154 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 13:57:45.223 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 13:57:45.259 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 13:57:45.288 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 13:57:45.432 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 13:57:45.443 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 2449.8965ms
+2026-07-18 13:57:45.444 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 13:57:45.452 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 2499.8922ms
+2026-07-18 14:06:36.290 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:06:36.327 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:06:36.491 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:06:36.492 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:06:36.504 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:06:47.267 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 217
+2026-07-18 14:06:47.313 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:06:47.337 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:06:48.900 -03:00 [INF] Executed DbCommand (71ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:06:48.959 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:06:49.061 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:06:49.132 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 14:06:49.290 -03:00 [INF] Executed DbCommand (22ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 14:06:49.358 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 14:06:49.382 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:06:49.416 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 14:06:49.481 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 14:06:49.519 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 14:06:49.548 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 14:06:49.689 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:06:49.700 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 2359.015ms
+2026-07-18 14:06:49.703 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:06:49.714 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 2447.741ms
+2026-07-18 14:13:44.891 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:13:44.955 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:13:45.090 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:13:45.091 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:13:45.091 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:13:51.950 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 14:13:52.128 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 200 null text/html;charset=utf-8 177.2011ms
+2026-07-18 14:13:52.139 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 14:13:52.139 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 14:13:52.139 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 14:13:52.140 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 14:13:52.145 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 14:13:52.156 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 14:13:52.159 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 304 null null 2.0449ms
+2026-07-18 14:13:52.160 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 304 null null 20.9755ms
+2026-07-18 14:13:52.160 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 304 null null 15.3892ms
+2026-07-18 14:13:52.160 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 304 null null 20.7772ms
+2026-07-18 14:13:52.161 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 14:13:52.161 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 304 null null 21.8404ms
+2026-07-18 14:13:52.166 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 26.9118ms
+2026-07-18 14:13:52.207 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 45.8437ms
+2026-07-18 14:13:52.417 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 14:13:52.420 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 14:13:52.428 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 304 null null 10.9649ms
+2026-07-18 14:13:52.462 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 41.7039ms
+2026-07-18 14:14:31.855 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 14:14:31.895 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:14:31.923 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:14:33.456 -03:00 [INF] Executed DbCommand (78ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:14:33.517 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:14:33.622 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:14:33.630 -03:00 [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:14:33.640 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 1712.9852ms
+2026-07-18 14:14:33.641 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:14:33.650 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 400 null application/json; charset=utf-8 1794.8198ms
+2026-07-18 14:14:45.891 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 217
+2026-07-18 14:14:45.894 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:14:45.894 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:14:45.975 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:14:45.994 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:14:46.014 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:14:46.017 -03:00 [INF] Executing BadRequestObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:14:46.018 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 122.1368ms
+2026-07-18 14:14:46.019 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:14:46.019 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 400 null application/json; charset=utf-8 128.1027ms
+2026-07-18 14:15:46.368 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:15:46.408 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:15:46.536 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:15:46.537 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:15:46.537 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:15:51.399 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 217
+2026-07-18 14:15:51.449 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:15:51.474 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:15:53.153 -03:00 [INF] Executed DbCommand (74ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:15:53.202 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:15:53.305 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:15:53.366 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 14:15:53.525 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 14:15:53.595 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 14:15:53.618 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:15:53.652 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 14:15:53.722 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 14:15:53.760 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 14:15:53.788 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 14:15:53.925 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:15:53.936 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 2457.5232ms
+2026-07-18 14:15:53.938 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:15:53.952 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 2555.6562ms
+2026-07-18 14:19:27.485 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:19:27.559 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:19:27.705 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:19:27.706 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:19:27.706 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:19:59.487 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 14:19:59.538 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:19:59.562 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:20:01.144 -03:00 [INF] Executed DbCommand (72ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:20:01.244 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:20:01.256 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 1689.4722ms
+2026-07-18 14:20:01.258 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:20:01.269 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 1783.5555ms
+2026-07-18 14:20:18.363 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 14:20:18.367 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:20:18.369 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:20:18.444 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:20:18.446 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:20:18.447 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 77.1567ms
+2026-07-18 14:20:18.449 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:20:18.450 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 87.3504ms
+2026-07-18 14:20:24.337 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 14:20:24.341 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:20:24.342 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:20:24.379 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:20:24.381 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:20:24.381 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 37.7187ms
+2026-07-18 14:20:24.382 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:20:24.383 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 45.8972ms
+2026-07-18 14:22:33.632 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:22:33.678 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:22:33.779 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:22:33.779 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:22:33.780 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:23:27.502 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/license/activate - application/json 45
+2026-07-18 14:23:27.553 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.LicenseController.Activate (TeamX.API)'
+2026-07-18 14:23:27.577 -03:00 [INF] Route matched with {action = "Activate", controller = "License"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Activate(TeamX.Shared.DTOs.SecureActivateRequest) on controller TeamX.API.Controllers.LicenseController (TeamX.API).
+2026-07-18 14:23:27.746 -03:00 [INF] Executing BadRequestObjectResult, writing value of type 'Microsoft.AspNetCore.Mvc.ValidationProblemDetails'.
+2026-07-18 14:23:27.779 -03:00 [INF] Executed action TeamX.API.Controllers.LicenseController.Activate (TeamX.API) in 197.575ms
+2026-07-18 14:23:27.782 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.LicenseController.Activate (TeamX.API)'
+2026-07-18 14:23:27.786 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/license/activate - 400 null application/problem+json; charset=utf-8 285.684ms
+2026-07-18 14:27:54.417 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:27:54.454 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:27:54.559 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:27:54.562 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:27:54.566 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:27:58.872 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 216
+2026-07-18 14:27:58.918 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:27:58.943 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:28:00.583 -03:00 [INF] Executed DbCommand (70ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:28:00.677 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:28:00.689 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 1742.0554ms
+2026-07-18 14:28:00.691 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:28:00.703 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 1832.3868ms
+2026-07-18 14:29:33.937 -03:00 [INF] Now listening on: https://localhost:7291
+2026-07-18 14:29:33.979 -03:00 [INF] Now listening on: http://localhost:5173
+2026-07-18 14:29:34.049 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 14:29:34.105 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-07-18 14:29:34.140 -03:00 [INF] Hosting environment: Development
+2026-07-18 14:29:34.142 -03:00 [INF] Content root path: C:\Users\User\Documents\TeamX\src\TeamX\TeamX.API
+2026-07-18 14:29:34.272 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 200 null text/html;charset=utf-8 223.463ms
+2026-07-18 14:29:34.287 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 14:29:34.287 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 14:29:34.287 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 14:29:34.290 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 14:29:34.292 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 14:29:34.309 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 14:29:34.312 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 304 null null 3.277ms
+2026-07-18 14:29:34.315 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 304 null null 27.8206ms
+2026-07-18 14:29:34.315 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 304 null null 22.1005ms
+2026-07-18 14:29:34.316 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 304 null null 25.5815ms
+2026-07-18 14:29:34.315 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 14:29:34.315 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 304 null null 28.0979ms
+2026-07-18 14:29:34.366 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 78.7554ms
+2026-07-18 14:29:34.373 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 14:29:34.748 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 432.8847ms
+2026-07-18 14:29:34.788 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 304 null null 415.7354ms
+2026-07-18 14:29:34.796 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 14:29:34.829 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 32.7642ms
+2026-07-18 14:29:34.830 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 14:29:34.830 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 14:29:34.835 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 14:29:34.830 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 14:29:34.838 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 14:29:34.840 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 304 null null 9.4263ms
+2026-07-18 14:29:34.841 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 304 null null 5.5344ms
+2026-07-18 14:29:34.842 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 304 null null 12.275ms
+2026-07-18 14:29:34.848 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 304 null null 9.9968ms
+2026-07-18 14:29:34.854 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 14:29:34.857 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 14:29:34.859 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 28.6705ms
+2026-07-18 14:29:34.864 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 304 null null 10.0962ms
+2026-07-18 14:29:34.902 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 45.3651ms
+2026-07-18 14:29:34.947 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 14:29:34.948 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 14:29:34.959 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 304 null null 11.8135ms
+2026-07-18 14:29:34.968 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 20.92ms
+2026-07-18 14:29:36.168 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 14:29:36.174 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 304 null null 5.9678ms
+2026-07-18 14:29:36.190 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 14:29:36.192 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 304 null null 2.0323ms
+2026-07-18 14:29:36.195 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 14:29:36.196 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 14:29:36.196 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 14:29:36.196 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 14:29:36.197 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 14:29:36.198 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 304 null null 3.0562ms
+2026-07-18 14:29:36.199 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 304 null null 3.5395ms
+2026-07-18 14:29:36.200 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 304 null null 4.5559ms
+2026-07-18 14:29:36.202 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 14:29:36.204 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 304 null null 6.4054ms
+2026-07-18 14:29:36.205 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 8.9376ms
+2026-07-18 14:29:36.229 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 27.5637ms
+2026-07-18 14:29:36.273 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 14:29:36.273 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 14:29:36.275 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 304 null null 1.8054ms
+2026-07-18 14:29:36.286 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 12.4381ms
+2026-07-18 14:30:17.379 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 213
+2026-07-18 14:30:17.390 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:30:17.414 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:30:18.952 -03:00 [INF] Executed DbCommand (70ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:30:19.002 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:30:19.101 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:30:19.165 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 14:30:19.309 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 14:30:19.380 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 14:30:19.402 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:30:19.435 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 14:30:19.500 -03:00 [INF] Executed DbCommand (20ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 14:30:19.536 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 14:30:19.566 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 14:30:19.705 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:30:19.715 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 2296.5139ms
+2026-07-18 14:30:19.716 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:30:19.724 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 2344.8067ms
+2026-07-18 14:31:08.096 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 214
+2026-07-18 14:31:08.101 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:08.102 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:31:08.190 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:31:08.193 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:31:08.196 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 86.9781ms
+2026-07-18 14:31:08.197 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:08.200 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 103.5497ms
+2026-07-18 14:31:17.078 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 215
+2026-07-18 14:31:17.080 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:17.081 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:31:17.119 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:31:17.123 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:31:17.123 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 40.8622ms
+2026-07-18 14:31:17.124 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:17.125 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 46.486ms
+2026-07-18 14:31:58.435 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 215
+2026-07-18 14:31:58.437 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:58.438 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:31:58.458 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:31:58.460 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:31:58.461 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 21.9951ms
+2026-07-18 14:31:58.462 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:31:58.463 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 28.0981ms
+2026-07-18 14:32:01.374 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.html - null null
+2026-07-18 14:32:01.382 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.html - 304 null null 7.0575ms
+2026-07-18 14:32:01.400 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - null null
+2026-07-18 14:32:01.452 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - null null
+2026-07-18 14:32:01.401 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.css - null null
+2026-07-18 14:32:01.402 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - null null
+2026-07-18 14:32:01.468 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.css - 304 null null 67.6708ms
+2026-07-18 14:32:01.457 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui.css - 304 null null 56.5704ms
+2026-07-18 14:32:01.401 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - null null
+2026-07-18 14:32:01.452 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/index.js - null null
+2026-07-18 14:32:01.463 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-standalone-preset.js - 304 null null 10.5826ms
+2026-07-18 14:32:01.457 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/_vs/browserLink - null null
+2026-07-18 14:32:01.475 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_framework/aspnetcore-browser-refresh.js - 200 16503 application/javascript; charset=utf-8 73.7473ms
+2026-07-18 14:32:01.479 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/swagger-ui-bundle.js - 304 null null 77.7555ms
+2026-07-18 14:32:01.481 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/index.js - 304 null null 28.6947ms
+2026-07-18 14:32:01.495 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/_vs/browserLink - 200 null text/javascript; charset=UTF-8 37.7155ms
+2026-07-18 14:32:01.553 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - null null
+2026-07-18 14:32:01.556 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - null null
+2026-07-18 14:32:01.559 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/favicon-32x32.png - 304 null null 2.7462ms
+2026-07-18 14:32:01.578 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7291/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 24.3564ms
+2026-07-18 14:32:10.515 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 215
+2026-07-18 14:32:10.516 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:10.517 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:32:10.538 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:32:10.541 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType0`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:32:10.541 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 23.541ms
+2026-07-18 14:32:10.542 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:10.543 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 27.8936ms
+2026-07-18 14:32:21.634 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 215
+2026-07-18 14:32:21.636 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:21.650 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:32:21.672 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:32:21.690 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:32:21.709 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:32:21.729 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 14:32:21.749 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?', @p2='?' (DbType = DateTime), @p3='?', @p4='?', @p5='?', @p6='?' (DbType = Boolean)], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Customers" ("Id", "Country", "CreatedAt", "Discord", "Email", "FullName", "IsActive")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6);
+2026-07-18 14:32:21.769 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 14:32:21.788 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:32:21.806 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 14:32:21.826 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 14:32:21.846 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 14:32:21.866 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 14:32:21.948 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:32:21.949 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 295.351ms
+2026-07-18 14:32:21.950 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:21.950 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 317.1872ms
+2026-07-18 14:32:34.334 -03:00 [INF] Request starting HTTP/2 POST https://localhost:7291/api/webhook/eremby - application/json 215
+2026-07-18 14:32:34.337 -03:00 [INF] Executing endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:34.338 -03:00 [INF] Route matched with {action = "Eremby", controller = "Webhook"}. Executing controller action with signature System.Threading.Tasks.Task`1[Microsoft.AspNetCore.Mvc.IActionResult] Eremby(TeamX.Shared.DTOs.ErembyWebhookRequest) on controller TeamX.API.Controllers.WebhookController (TeamX.API).
+2026-07-18 14:32:34.359 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_TransactionId_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."TransactionId" = @__request_TransactionId_0
+LIMIT 1
+2026-07-18 14:32:34.378 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_ProductId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."Id", p."Code", p."CreatedAt", p."Description", p."IsActive", p."Name", p."Price", p."Type"
+FROM "Products" AS p
+WHERE p."Id" = @__request_ProductId_0
+LIMIT 1
+2026-07-18 14:32:34.398 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:32:34.417 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__email_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT c."Id", c."Country", c."CreatedAt", c."Discord", c."Email", c."FullName", c."IsActive"
+FROM "Customers" AS c
+WHERE c."Email" = @__email_0
+LIMIT 1
+2026-07-18 14:32:34.436 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (DbType = DateTime), @p2='?', @p3='?' (DbType = Guid), @p4='?' (DbType = Int32), @p5='?' (DbType = Guid), @p6='?' (DbType = Guid), @p7='?', @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Orders" ("Id", "CreatedAt", "CustomerEmail", "CustomerId", "LicenseId", "PlanId", "ProductId", "Status", "TransactionId")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8);
+2026-07-18 14:32:34.455 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__request_PlanId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT p."PlanId", p."Code", p."CreatedAt", p."DurationDays", p."IsActive", p."IsLifetime", p."MaxDevices", p."Name", p."Price", p."ProductId"
+FROM "Plans" AS p
+WHERE p."PlanId" = @__request_PlanId_0
+LIMIT 1
+2026-07-18 14:32:34.475 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__key_0='?'], CommandType='"Text"', CommandTimeout='30']
+SELECT EXISTS (
+    SELECT 1
+    FROM "Licenses" AS l
+    WHERE l."Key" = @__key_0)
+2026-07-18 14:32:34.494 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p0='?' (DbType = DateTime), @p1='?' (DbType = Guid), @p2='?' (DbType = DateTime), @p3='?' (DbType = Boolean), @p4='?', @p5='?' (DbType = Int32), @p6='?' (DbType = Guid), @p7='?' (DbType = Guid), @p8='?'], CommandType='"Text"', CommandTimeout='30']
+INSERT INTO "Licenses" ("CreatedAt", "CustomerId", "ExpiresAt", "IsActivated", "Key", "MaxDevices", "PlanId", "ProductId", "Status")
+VALUES (@p0, @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8)
+RETURNING "Id";
+2026-07-18 14:32:34.513 -03:00 [INF] Executed DbCommand (17ms) [Parameters=[@__orderId_0='?' (DbType = Guid)], CommandType='"Text"', CommandTimeout='30']
+SELECT o."Id", o."CreatedAt", o."CustomerEmail", o."CustomerId", o."LicenseId", o."PlanId", o."ProductId", o."Status", o."TransactionId"
+FROM "Orders" AS o
+WHERE o."Id" = @__orderId_0
+LIMIT 1
+2026-07-18 14:32:34.533 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[@p1='?' (DbType = Guid), @p0='?' (DbType = Int32)], CommandType='"Text"', CommandTimeout='30']
+UPDATE "Orders" SET "LicenseId" = @p0
+WHERE "Id" = @p1;
+2026-07-18 14:32:34.610 -03:00 [INF] Executing OkObjectResult, writing value of type '<>f__AnonymousType2`2[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e],[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]'.
+2026-07-18 14:32:34.611 -03:00 [INF] Executed action TeamX.API.Controllers.WebhookController.Eremby (TeamX.API) in 271.0789ms
+2026-07-18 14:32:34.612 -03:00 [INF] Executed endpoint 'TeamX.API.Controllers.WebhookController.Eremby (TeamX.API)'
+2026-07-18 14:32:34.612 -03:00 [INF] Request finished HTTP/2 POST https://localhost:7291/api/webhook/eremby - 200 null application/json; charset=utf-8 278.3536ms
