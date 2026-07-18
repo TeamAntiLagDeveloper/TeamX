@@ -40,13 +40,23 @@ public class WebhookController : ControllerBase
         // ================================
         // Verifica pagamento
         // ================================
-
-        if (request.Data.Status != "approved")
+        Console.WriteLine("===== EREEMBY =====");
+        Console.WriteLine($"EVENT: {request.Event}");
+        Console.WriteLine($"STATUS: {request.Data.Status}");
+        Console.WriteLine($"TRANSACTION: {request.Data.Id}");
+        Console.WriteLine($"PRODUCT: {request.Data.Product.Id}");
+        Console.WriteLine($"EMAIL: {request.Data.Customer.Email}");
+        if (
+            request.Data.Status != "approved" &&
+            request.Data.Status != "paid" &&
+            request.Data.Status != "completed"
+        )
         {
             return Ok(new
             {
                 success = false,
-                message = "Pagamento não aprovado"
+                message = "Pagamento não aprovado",
+                status = request.Data.Status
             });
         }
 
@@ -99,9 +109,8 @@ public class WebhookController : ControllerBase
         // ================================
 
         var plan =
-            await _context.Plans
-            .FirstOrDefaultAsync(x =>
-                x.ProductId == product.Id);
+            await GetTeamXPlan(
+                request.Data.Product.Id);
 
 
 
@@ -239,6 +248,33 @@ public class WebhookController : ControllerBase
                 await _context.Products
                 .FirstOrDefaultAsync(
                     x => x.Name == "TeamX Optimizer"),
+
+            _ => null
+        };
+    }
+
+    private async Task<TeamX.Core.Entities.Plan?> GetTeamXPlan(
+    string ereembyProductId)
+    {
+        return ereembyProductId switch
+        {
+            "112169" =>
+                await _context.Plans
+                .FirstOrDefaultAsync(
+                    x => x.Name == "Basic"),
+
+
+            "112170" =>
+                await _context.Plans
+                .FirstOrDefaultAsync(
+                    x => x.Name == "Standard"),
+
+
+            "112171" =>
+                await _context.Plans
+                .FirstOrDefaultAsync(
+                    x => x.Name == "Professional"),
+
 
             _ => null
         };
