@@ -7,6 +7,7 @@ using TeamX.Core.Services;
 using TeamX.Data.Context;
 using TeamX.Data.Repositories;
 using TeamX.Security.Licensing;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace TeamX.API;
 
@@ -57,12 +58,9 @@ public class Program
         // === App ===
         var app = builder.Build();
 
-        if (app.Environment.IsDevelopment())
-        {
-            app.UseSwagger();
-            app.UseSwaggerUI();
-        }
-
+        app.UseSwagger();
+        app.UseSwaggerUI();
+        app.UseForwardedHeaders();
         app.UseHttpsRedirection();
         app.UseMiddleware<ExceptionMiddleware>();
         app.UseAuthorization();
