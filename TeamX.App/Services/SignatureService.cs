@@ -10,8 +10,11 @@ public static class SignatureService
 
     public static string GenerateSignature(SecureActivateRequest request)
     {
-        var data = $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
 
+        var data =
+            $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
+
+        MessageBox.Show(data, "DATA USADA NA ASSINATURA");
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(Secret));
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
         return Convert.ToHexString(hash);

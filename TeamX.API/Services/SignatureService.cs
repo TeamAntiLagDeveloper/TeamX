@@ -15,6 +15,9 @@ public class SignatureService : ISignatureService
         var data =
             $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
 
+        Console.WriteLine("API DATA:");
+        Console.WriteLine(data);
+
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
 
