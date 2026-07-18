@@ -20,3 +20,8 @@ publish/
 # Environment
 .env
 appsettings.Development.json
+
+# Logs
+Logs/
+*.log
+TeamX.API/Logs/
