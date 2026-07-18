@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using TeamX.Core.Interfaces;
 using TeamX.Data.Context;
 using TeamX.Shared.DTOs;
@@ -33,19 +34,72 @@ public class WebhookController : ControllerBase
 
 
     [HttpPost("eremby")]
-    public async Task<IActionResult> Eremby(
-        [FromBody] ErembyWebhookRequest request)
+    public async Task<IActionResult> Eremby()
     {
 
-        // ================================
-        // Verifica pagamento
-        // ================================
-        Console.WriteLine("===== EREEMBY =====");
+        // ==================================
+        // Captura JSON real da Ereemby
+        // ==================================
+
+        using var reader = new StreamReader(Request.Body);
+
+        var json = await reader.ReadToEndAsync();
+
+
+        Console.WriteLine("===== JSON BRUTO EREEMBY =====");
+        Console.WriteLine(json);
+
+
+
+        ErembyWebhookRequest? request;
+
+
+        try
+        {
+            request = JsonSerializer.Deserialize<ErembyWebhookRequest>(
+                json,
+                new JsonSerializerOptions
+                {
+                    PropertyNameCaseInsensitive = true
+                });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+
+            return BadRequest(new
+            {
+                success = false,
+                message = "JSON inválido"
+            });
+        }
+
+
+
+        if (request == null)
+        {
+            return BadRequest(new
+            {
+                success = false,
+                message = "Payload vazio"
+            });
+        }
+
+
+
+        Console.WriteLine("===== DADOS PROCESSADOS =====");
         Console.WriteLine($"EVENT: {request.Event}");
         Console.WriteLine($"STATUS: {request.Data.Status}");
         Console.WriteLine($"TRANSACTION: {request.Data.Id}");
         Console.WriteLine($"PRODUCT: {request.Data.Product.Id}");
         Console.WriteLine($"EMAIL: {request.Data.Customer.Email}");
+
+
+
+        // ==================================
+        // Verifica pagamento
+        // ==================================
+
         if (
             request.Data.Status != "approved" &&
             request.Data.Status != "paid" &&
@@ -55,21 +109,21 @@ public class WebhookController : ControllerBase
             return Ok(new
             {
                 success = false,
-                message = "Pagamento não aprovado",
-                status = request.Data.Status
+                message = "Pagamento não aprovado"
             });
         }
 
 
 
-        // ================================
-        // Evita duplicação
-        // ================================
+        // ==================================
+        // Evitar duplicação
+        // ==================================
 
         var existingOrder =
             await _context.Orders
             .FirstOrDefaultAsync(x =>
                 x.TransactionId == request.Data.Id);
+
 
 
         if (existingOrder != null)
@@ -83,9 +137,9 @@ public class WebhookController : ControllerBase
 
 
 
-        // ================================
-        // Localizar produto TeamX
-        // ================================
+        // ==================================
+        // Produto TeamX
+        // ==================================
 
         var product =
             await GetTeamXProduct(
@@ -104,9 +158,9 @@ public class WebhookController : ControllerBase
 
 
 
-        // ================================
-        // Localizar plano
-        // ================================
+        // ==================================
+        // Plano
+        // ==================================
 
         var plan =
             await GetTeamXPlan(
@@ -125,10 +179,9 @@ public class WebhookController : ControllerBase
 
 
 
-
-        // ================================
-        // Criar cliente
-        // ================================
+        // ==================================
+        // Cliente
+        // ==================================
 
         var customer =
             await _customerService.GetOrCreateAsync(
@@ -136,10 +189,9 @@ public class WebhookController : ControllerBase
 
 
 
-
-        // ================================
-        // Criar pedido
-        // ================================
+        // ==================================
+        // Pedido
+        // ==================================
 
         var order =
             await _orderService.CreateAsync(
@@ -151,10 +203,9 @@ public class WebhookController : ControllerBase
 
 
 
-
-        // ================================
-        // Criar licença
-        // ================================
+        // ==================================
+        // Licença
+        // ==================================
 
         var license =
             await _licenseService.CreateLicenseAsync(
@@ -167,48 +218,39 @@ public class WebhookController : ControllerBase
 
 
 
-        // ================================
-        // Vincular licença ao pedido
-        // ================================
-
         await _orderService.UpdateLicenseAsync(
             order.Id,
             license.Id);
 
 
 
-
-        // ================================
-        // Enviar email
-        // ================================
+        // ==================================
+        // Email
+        // ==================================
 
         try
         {
             await _emailService.SendLicenseAsync(
                 new LicenseEmailRequest
                 {
-                    CustomerEmail =
-                        request.Data.Customer.Email,
+                    CustomerEmail = request.Data.Customer.Email,
 
-                    ProductName =
-                        product.Name,
+                    ProductName = product.Name,
 
-                    LicenseKey =
-                        license.Key,
+                    LicenseKey = license.Key,
 
-                    ExpirationDate =
-                        license.ExpiresAt,
+                    ExpirationDate = license.ExpiresAt,
 
                     DownloadLink =
-                        "https://teamantilag.com/download/teamx",
+                    "https://teamantilag.com/download/teamx",
 
                     ActivationInstructions =
                     """
                     1. Baixe o TeamX.
-                    2. Instale o aplicativo.
-                    3. Abra o TeamX.
+                    2. Instale.
+                    3. Abra o aplicativo.
                     4. Informe sua chave.
-                    5. Clique em ativar.
+                    5. Ative.
                     """
                 });
         }
@@ -220,31 +262,23 @@ public class WebhookController : ControllerBase
 
 
 
-
         return Ok(new
         {
             success = true,
             message = "Licença criada",
             licenseKey = license.Key
         });
+
     }
 
+
+
     private async Task<TeamX.Core.Entities.Product?> GetTeamXProduct(
-        string ereembyProductId)
+        string id)
     {
-        return ereembyProductId switch
+        return id switch
         {
-            "112169" =>
-                await _context.Products
-                .FirstOrDefaultAsync(
-                    x => x.Name == "TeamX Optimizer"),
-
-            "112170" =>
-                await _context.Products
-                .FirstOrDefaultAsync(
-                    x => x.Name == "TeamX Optimizer"),
-
-            "112171" =>
+            "112169" or "112170" or "112171" =>
                 await _context.Products
                 .FirstOrDefaultAsync(
                     x => x.Name == "TeamX Optimizer"),
@@ -253,10 +287,12 @@ public class WebhookController : ControllerBase
         };
     }
 
+
+
     private async Task<TeamX.Core.Entities.Plan?> GetTeamXPlan(
-    string ereembyProductId)
+        string id)
     {
-        return ereembyProductId switch
+        return id switch
         {
             "112169" =>
                 await _context.Plans
