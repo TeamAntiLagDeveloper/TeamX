@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -45,7 +46,7 @@ public class TokenService : ITokenService
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public Task<TokenValidationResponse> ValidateTokenAsync(string token, string hardwareFingerprint)
+    public async Task<TokenValidationResponse> ValidateTokenAsync(string token, string hardwareFingerprint)
     {
         try
         {
@@ -65,34 +66,77 @@ public class TokenService : ITokenService
             }, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;
+
             var storedHardware = jwtToken.Claims
                 .FirstOrDefault(c => c.Type == "HardwareFingerprint")?.Value;
 
             if (storedHardware != hardwareFingerprint)
             {
-                return Task.FromResult(new TokenValidationResponse
+                return new TokenValidationResponse
                 {
                     Success = false,
                     IsValid = false,
-                    Message = "Dispositivo não autorizado"
-                });
+                    Message = "Dispositivo não autorizado."
+                };
             }
 
-            return Task.FromResult(new TokenValidationResponse
+            var licenseId = int.Parse(
+                jwtToken.Claims.First(c => c.Type == "LicenseId").Value);
+
+            var license = await _context.Licenses
+                .FirstOrDefaultAsync(x => x.Id == licenseId);
+
+            if (license == null)
+            {
+                return new TokenValidationResponse
+                {
+                    Success = false,
+                    IsValid = false,
+                    Message = "Licença não encontrada."
+                };
+            }
+
+            if (license.Status != "Active")
+            {
+                return new TokenValidationResponse
+                {
+                    Success = false,
+                    IsValid = false,
+                    Status = license.Status,
+                    ExpiresAt = license.ExpiresAt,
+                    Message = $"Licença {license.Status}."
+                };
+            }
+
+            if (license.ExpiresAt <= DateTime.UtcNow)
+            {
+                return new TokenValidationResponse
+                {
+                    Success = false,
+                    IsValid = false,
+                    Status = "Expired",
+                    ExpiresAt = license.ExpiresAt,
+                    Message = "Licença expirada."
+                };
+            }
+
+            return new TokenValidationResponse
             {
                 Success = true,
                 IsValid = true,
-                Message = "Token válido"
-            });
+                Status = "Active",
+                ExpiresAt = license.ExpiresAt,
+                Message = "Token válido."
+            };
         }
         catch
         {
-            return Task.FromResult(new TokenValidationResponse
+            return new TokenValidationResponse
             {
                 Success = false,
                 IsValid = false,
-                Message = "Token inválido ou expirado"
-            });
+                Message = "Token inválido ou expirado."
+            };
         }
     }
 
