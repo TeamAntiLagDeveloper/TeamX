@@ -48,7 +48,13 @@ public partial class MainForm : Form
 
             // Preenche Signature depois de criar o objeto
             request.Signature = SignatureService.GenerateSignature(request); // ajuste conforme implementação
+            MessageBox.Show($"""
+Signature:
+{request.Signature}
 
+Length:
+{request.Signature.Length}
+""");
             var response = await _apiService.ActivateLicenseAsync(request);
 
             if (response.Success)

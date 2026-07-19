@@ -6,17 +6,18 @@ namespace TeamX.App.Services;
 
 public static class SignatureService
 {
-    private static readonly string Secret = "3A8E5F91B9C4D7F2E1A65C8B34D91F77TEAMX2026SECURE9F2A1B8C";
+    private const string Secret =
+        "7f3a9d2c8e1b5f6a4d9c7e2b8a1f6d3c9e5a7b2d4f8c1a6e9b3c7d5f2a8";
 
     public static string GenerateSignature(SecureActivateRequest request)
     {
-
         var data =
             $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
 
-        MessageBox.Show(data, "DATA USADA NA ASSINATURA");
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(Secret));
+
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+
         return Convert.ToHexString(hash);
     }
 }
