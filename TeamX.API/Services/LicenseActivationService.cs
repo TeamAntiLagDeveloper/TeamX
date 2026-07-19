@@ -143,16 +143,32 @@ public class LicenseActivationService : ILicenseActivationService
     {
         var requestTime = DateTimeOffset.FromUnixTimeSeconds(request.Timestamp);
 
+        Console.WriteLine($"NOW: {DateTimeOffset.UtcNow}");
+        Console.WriteLine($"REQUEST: {requestTime}");
+        Console.WriteLine($"DIFF: {DateTimeOffset.UtcNow - requestTime}");
+
         if (DateTimeOffset.UtcNow - requestTime > TimeSpan.FromSeconds(60))
+        {
+            Console.WriteLine("ERRO TIMESTAMP");
             return false;
+        }
 
         if (await _nonceService.IsNonceUsedAsync(request.Nonce))
+        {
+            Console.WriteLine("ERRO NONCE");
             return false;
+        }
+
+        Console.WriteLine("NONCE OK");
 
         await _nonceService.MarkNonceAsUsedAsync(request.Nonce, TimeSpan.FromMinutes(5));
 
         var secret = _configuration["Security:RequestSigningSecret"] ?? "";
 
-        return _signatureService.ValidateSignature(request, secret);
+        bool sign = _signatureService.ValidateSignature(request, secret);
+
+        Console.WriteLine($"SIGNATURE: {sign}");
+
+        return sign;
     }
 }

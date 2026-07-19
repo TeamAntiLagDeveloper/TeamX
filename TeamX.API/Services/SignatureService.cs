@@ -26,33 +26,21 @@ public class SignatureService : ISignatureService
 
     public bool ValidateSignature(
         SecureActivateRequest request,
-        string receivedSignature)
+        string secret)
     {
         var data =
             $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
 
-        Console.WriteLine("LICENSE:");
-        Console.WriteLine(request.LicenseKey);
+        using var hmac = new HMACSHA256(
+            Encoding.UTF8.GetBytes(secret));
 
-        Console.WriteLine("HW:");
-        Console.WriteLine(request.HardwareFingerprint);
+        var hash = hmac.ComputeHash(
+            Encoding.UTF8.GetBytes(data));
 
-        Console.WriteLine("NONCE:");
-        Console.WriteLine(request.Nonce);
+        var expected = Convert.ToHexString(hash);
 
-        Console.WriteLine("TIMESTAMP:");
-        Console.WriteLine(request.Timestamp);
-
-        Console.WriteLine("HASH:");
-        Console.WriteLine(request.ExecutableHash);
-
-        Console.WriteLine("VERSION:");
-        Console.WriteLine(request.AppVersion);
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(Secret));
-        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
-
-        var expectedSignature = Convert.ToHexString(hash);
-
-        return expectedSignature.Equals(receivedSignature, StringComparison.OrdinalIgnoreCase);
+        return expected.Equals(
+            request.Signature,
+            StringComparison.OrdinalIgnoreCase);
     }
 }
