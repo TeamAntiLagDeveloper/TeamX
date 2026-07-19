@@ -13,7 +13,26 @@ public static class SignatureService
     {
         var data =
             $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
+        MessageBox.Show(
+$"""
+LICENSE:
+{request.LicenseKey}
 
+HW:
+{request.HardwareFingerprint}
+
+NONCE:
+{request.Nonce}
+
+TIMESTAMP:
+{request.Timestamp}
+
+HASH:
+{request.ExecutableHash}
+
+VERSION:
+{request.AppVersion}
+""");
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(Secret));
 
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));

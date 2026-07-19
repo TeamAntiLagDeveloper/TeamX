@@ -31,6 +31,23 @@ public class SignatureService : ISignatureService
         var data =
             $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
 
+        Console.WriteLine("LICENSE:");
+        Console.WriteLine(request.LicenseKey);
+
+        Console.WriteLine("HW:");
+        Console.WriteLine(request.HardwareFingerprint);
+
+        Console.WriteLine("NONCE:");
+        Console.WriteLine(request.Nonce);
+
+        Console.WriteLine("TIMESTAMP:");
+        Console.WriteLine(request.Timestamp);
+
+        Console.WriteLine("HASH:");
+        Console.WriteLine(request.ExecutableHash);
+
+        Console.WriteLine("VERSION:");
+        Console.WriteLine(request.AppVersion);
         using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(Secret));
         var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
 
