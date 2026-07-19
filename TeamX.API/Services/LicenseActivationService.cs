@@ -144,28 +144,15 @@ public class LicenseActivationService : ILicenseActivationService
         var requestTime = DateTimeOffset.FromUnixTimeSeconds(request.Timestamp);
 
         if (DateTimeOffset.UtcNow - requestTime > TimeSpan.FromSeconds(60))
-            throw new Exception("TIMESTAMP INVÁLIDO");
+            return false;
 
         if (await _nonceService.IsNonceUsedAsync(request.Nonce))
-            throw new Exception("NONCE REPETIDO");
+            return false;
 
         await _nonceService.MarkNonceAsUsedAsync(request.Nonce, TimeSpan.FromMinutes(5));
 
         var secret = _configuration["Security:RequestSigningSecret"] ?? "";
 
-        var expected = _signatureService.GenerateSignature(request, secret);
-
-        throw new Exception($"""
-SECRET: {secret}
-
-EXPECTED:
-{expected}
-
-RECEIVED:
-{request.Signature}
-
-MATCH:
-{expected.Equals(request.Signature, StringComparison.OrdinalIgnoreCase)}
-""");
+        return _signatureService.ValidateSignature(request, secret);
     }
 }
