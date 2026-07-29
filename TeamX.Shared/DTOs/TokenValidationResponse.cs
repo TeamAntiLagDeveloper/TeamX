@@ -11,6 +11,7 @@ public class TokenValidationResponse
     public DateTime? ExpiresAt { get; set; }
     public bool IsValid { get; set; }
 
+    public int LicenseId { get; set; }
     /// <summary>
     /// Versão mínima exigida pelo servidor.
     /// </summary>

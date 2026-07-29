@@ -21,7 +21,7 @@ public interface IOrderService
     /// <summary>
     /// Associa uma licença a um pedido existente.
     /// </summary>
-    Task UpdateLicenseAsync(
+    Task<bool> UpdateLicenseAsync(
         Guid orderId,
         int licenseId,
         CancellationToken cancellationToken = default);

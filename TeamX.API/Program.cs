@@ -1,17 +1,19 @@
-﻿using System.Threading.RateLimiting;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
 using Resend;
 using Serilog;
+using System.Threading.RateLimiting;
 using TeamX.API.Middleware;
 using TeamX.API.Services;
 using TeamX.Core.Interfaces;
 using TeamX.Data.Context;
 using TeamX.Data.Repositories;
+using TeamX.Data.Seeders;
 using TeamX.Security.Licensing;
+using HealthChecks.NpgSql;
 
 namespace TeamX.API;
 
@@ -20,7 +22,7 @@ public class Program
     public static async Task Main(string[] args)
     {
         // ─── Serilog cedo (captura erros de startup) ───────────────
-        Log.Logger = new LoggerConfiguration()
+        Serilog.Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .CreateBootstrapLogger();
 
@@ -73,10 +75,19 @@ public class Program
             builder.Services.AddProblemDetails();
 
             // Health checks
+
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+            Console.WriteLine(connectionString);
+
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string não configurada");
+            }
+
             builder.Services.AddHealthChecks()
                 .AddNpgSql(
-                    builder.Configuration.GetConnectionString("DefaultConnection")
-                    ?? throw new InvalidOperationException("Connection string não configurada"),
+                    connectionString,
                     name: "postgres");
 
             // ─── Forwarded headers (proxy / Docker / reverse proxy) ─
@@ -227,17 +238,17 @@ public class Program
             app.MapControllers();
             app.MapHealthChecks("/health");
 
-            Log.Information("TeamX.API iniciando...");
+            Serilog.Log.Information("TeamX.API iniciando...");
             await app.RunAsync();
         }
         catch (Exception ex)
         {
-            Log.Fatal(ex, "Aplicação encerrada inesperadamente");
+            Serilog.Log.Fatal(ex, "Aplicação encerrada inesperadamente");
             throw;
         }
         finally
         {
-            await Log.CloseAndFlushAsync();
+            await Serilog.Log.CloseAndFlushAsync();
         }
     }
 }

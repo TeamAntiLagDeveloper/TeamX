@@ -9,4 +9,6 @@ public class HealthResponse
     public string Version { get; set; } = "1.0.0";
     public string Status { get; set; } = "Online";
     public DateTime ServerTime { get; set; } = DateTime.UtcNow;
+
+    public DateTime Timestamp { get; set; }
 }

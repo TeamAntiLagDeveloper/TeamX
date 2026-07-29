@@ -44,7 +44,7 @@ public class ExceptionMiddleware
         if (context.Response.HasStarted)
         {
             _logger.LogWarning(exception, "A response já havia iniciado. Não foi possível tratar a exception.");
-            throw; // relança para o pipeline padrão
+            throw new InvalidOperationException("...");
         }
 
         var (statusCode, title, detail) = MapException(exception);

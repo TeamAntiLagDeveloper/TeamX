@@ -84,8 +84,11 @@ public class OrderService : IOrderService
 
             return order;
         }
-        catch (DbUpdateException) when (await OrderExistsByTransactionAsync(transactionId, ct))
+        catch (DbUpdateException)
         {
+            if (!await OrderExistsByTransactionAsync(transactionId, ct))
+                throw;
+
             // Race condition: outro request criou o mesmo TransactionId
             _context.Entry(order).State = EntityState.Detached;
 
