@@ -75,19 +75,11 @@ public class Program
             builder.Services.AddProblemDetails();
 
             // Health checks
-
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
-            Console.WriteLine(connectionString);
-
-            if (string.IsNullOrEmpty(connectionString))
-            {
-                throw new InvalidOperationException("Connection string não configurada");
-            }
-
+            
             builder.Services.AddHealthChecks()
                 .AddNpgSql(
-                    connectionString,
+                    builder.Configuration.GetConnectionString("DefaultConnection")
+                    ?? throw new InvalidOperationException("Connection string não configurada"),
                     name: "postgres");
 
             // ─── Forwarded headers (proxy / Docker / reverse proxy) ─
