@@ -1,5 +1,8 @@
 ﻿namespace TeamX.Shared.DTOs;
 
+/// <summary>
+/// Request seguro de heartbeat.
+/// </summary>
 public class SecureHeartbeatRequest
 {
     public string Token { get; set; } = string.Empty;

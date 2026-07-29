@@ -1,34 +1,84 @@
-﻿using TeamX.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
 using TeamX.Core.Interfaces;
+using TeamX.Data.Context;
 
-namespace TeamX.Core.Services;
+namespace TeamX.API.Services;
 
 public class HeartbeatService : IHeartbeatService
 {
     private readonly ApplicationDbContext _context;
     private readonly ITokenService _tokenService;
+    private readonly ILogger<HeartbeatService> _logger;
 
     public HeartbeatService(
         ApplicationDbContext context,
-        ITokenService tokenService)
+        ITokenService tokenService,
+        ILogger<HeartbeatService> logger)
     {
         _context = context;
         _tokenService = tokenService;
+        _logger = logger;
     }
 
-    public async Task<bool> RecordHeartbeatAsync(string token, string hardwareFingerprint)
+    public async Task<bool> RecordHeartbeatAsync(
+        string token,
+        string hardwareFingerprint,
+        CancellationToken ct = default)
     {
+        if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(hardwareFingerprint))
+            return false;
+
+        var validation = await _tokenService.ValidateTokenAsync(token, hardwareFingerprint);
+        if (!validation.IsValid)
+        {
+            _logger.LogDebug(
+                "Heartbeat rejeitado: token inválido. HW={HardwareId}",
+                hardwareFingerprint);
+            return false;
+        }
+
+        // Atualiza diretamente no banco (sem carregar a entidade inteira)
+        // Filtra também pelo LicenseId do token para evitar atualizar device de outra licença
+        var rowsAffected = await _context.LicenseDevices
+            .Where(d =>
+                d.HardwareId == hardwareFingerprint &&
+                d.IsActive &&
+                d.LicenseId == validation.LicenseId)   // <-- importante
+            .ExecuteUpdateAsync(setters => setters
+                .SetProperty(d => d.LastSeen, DateTime.UtcNow),
+                ct);
+
+        if (rowsAffected == 0)
+        {
+            _logger.LogWarning(
+                "Heartbeat: device não encontrado ou inativo. LicenseId={LicenseId} HW={HardwareId}",
+                validation.LicenseId,
+                hardwareFingerprint);
+            return false;
+        }
+
+        return true;
+    }
+
+    public async Task<bool> IsDeviceActiveAsync(
+        string token,
+        string hardwareFingerprint,
+        CancellationToken ct = default)
+    {
+        if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(hardwareFingerprint))
+            return false;
+
         var validation = await _tokenService.ValidateTokenAsync(token, hardwareFingerprint);
         if (!validation.IsValid)
             return false;
 
-        // Atualização futura do LastSeen pode ser implementada aqui
-        return true;
-    }
-
-    public Task<bool> IsDeviceActiveAsync(string token, string hardwareFingerprint)
-    {
-        // Implementação básica por enquanto
-        return Task.FromResult(true);
+        // Verifica existência + vínculo com a licença do token
+        return await _context.LicenseDevices
+            .AsNoTracking()
+            .AnyAsync(d =>
+                d.HardwareId == hardwareFingerprint &&
+                d.IsActive &&
+                d.LicenseId == validation.LicenseId,
+                ct);
     }
 }

@@ -1,32 +1,41 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TeamX.Core.Entities;
-using LicenseEntity = TeamX.Core.Entities.License;
 
 namespace TeamX.Data.Context;
 
-public class ApplicationDbContext : DbContext
+/// <summary>
+/// Contexto principal do Entity Framework Core da aplicação TeamX.
+/// </summary>
+public sealed class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
 
-    public DbSet<License> Licenses { get; set; }
-
-    public DbSet<Product> Products => Set<Product>();
-
-    public DbSet<Plan> Plans => Set<Plan>();
+    // ========================
+    // DbSets
+    // ========================
 
     public DbSet<Customer> Customers => Set<Customer>();
-
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Plan> Plans => Set<Plan>();
+    public DbSet<License> Licenses => Set<License>();
     public DbSet<LicenseDevice> LicenseDevices => Set<LicenseDevice>();
-
+    public DbSet<LicenseAuditLog> LicenseAuditLogs => Set<LicenseAuditLog>();
     public DbSet<Order> Orders => Set<Order>();
+    public DbSet<RevokedToken> RevokedTokens => Set<RevokedToken>();
+    public DbSet<UsedNonce> UsedNonces => Set<UsedNonce>();
+
+    // ========================
+    // Configuration
+    // ========================
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        // Aplica automaticamente todas as IEntityTypeConfiguration do assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

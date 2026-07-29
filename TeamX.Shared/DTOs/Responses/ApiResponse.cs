@@ -1,5 +1,8 @@
 ﻿namespace TeamX.Shared.DTOs.Responses;
 
+/// <summary>
+/// Resposta padrão da API.
+/// </summary>
 public class ApiResponse<T>
 {
     public bool Success { get; set; }
@@ -8,21 +11,17 @@ public class ApiResponse<T>
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
     public static ApiResponse<T> Ok(T data, string message = "Sucesso")
-    {
-        return new ApiResponse<T>
+        => new()
         {
             Success = true,
             Message = message,
             Data = data
         };
-    }
 
     public static ApiResponse<T> Fail(string message)
-    {
-        return new ApiResponse<T>
+        => new()
         {
             Success = false,
             Message = message
         };
-    }
 }

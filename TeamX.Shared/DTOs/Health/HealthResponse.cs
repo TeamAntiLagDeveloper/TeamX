@@ -1,5 +1,8 @@
 ﻿namespace TeamX.Shared.DTOs.Health;
 
+/// <summary>
+/// Resposta do endpoint de health check.
+/// </summary>
 public class HealthResponse
 {
     public string Name { get; set; } = "TeamX API";

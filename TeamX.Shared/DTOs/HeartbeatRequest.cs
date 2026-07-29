@@ -1,5 +1,8 @@
 ﻿namespace TeamX.Shared.DTOs;
 
+/// <summary>
+/// Request de heartbeat (versão legada).
+/// </summary>
 public class HeartbeatRequest
 {
     public string LicenseKey { get; set; } = string.Empty;

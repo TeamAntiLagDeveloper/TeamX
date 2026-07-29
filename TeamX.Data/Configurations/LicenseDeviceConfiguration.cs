@@ -4,13 +4,20 @@ using TeamX.Core.Entities;
 
 namespace TeamX.Data.Configurations;
 
-public class LicenseDeviceConfiguration : IEntityTypeConfiguration<LicenseDevice>
+/// <summary>
+/// Configuração do Entity Framework Core para a entidade <see cref="LicenseDevice"/>.
+/// </summary>
+public sealed class LicenseDeviceConfiguration : IEntityTypeConfiguration<LicenseDevice>
 {
     public void Configure(EntityTypeBuilder<LicenseDevice> builder)
     {
         builder.ToTable("LicenseDevices");
 
         builder.HasKey(x => x.Id);
+
+        // ========================
+        // Properties
+        // ========================
 
         builder.Property(x => x.Id)
                .ValueGeneratedNever();
@@ -27,6 +34,18 @@ public class LicenseDeviceConfiguration : IEntityTypeConfiguration<LicenseDevice
 
         builder.Property(x => x.IpAddress)
                .HasMaxLength(64);
+
+        // ========================
+        // Indexes
+        // ========================
+
+        // Garante que o mesmo HardwareId não seja registrado mais de uma vez na mesma licença
+        builder.HasIndex(x => new { x.LicenseId, x.HardwareId })
+               .IsUnique();
+
+        // ========================
+        // Relationships
+        // ========================
 
         builder.HasOne(x => x.License)
                .WithMany(x => x.Devices)

@@ -6,6 +6,9 @@ public class Customer
 
     public string FullName { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Sempre normalizado: trim + lower (ver CustomerService).
+    /// </summary>
     public string Email { get; set; } = string.Empty;
 
     public string? Discord { get; set; }
@@ -16,7 +19,9 @@ public class Customer
 
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-    public ICollection<License> Licenses { get; set; } = new List<License>();
+    public DateTime? UpdatedAt { get; set; }
 
+    // Navegação
+    public ICollection<License> Licenses { get; set; } = new List<License>();
     public ICollection<Order> Orders { get; set; } = new List<Order>();
 }

@@ -1,11 +1,27 @@
-﻿namespace TeamX.API.DTOs.License;
-using TeamX.Shared.DTOs;
+﻿using System.ComponentModel.DataAnnotations;
 
-public class CreateLicenseRequest
+namespace TeamX.API.DTOs.License;
+
+/// <summary>
+/// Request para criação de uma nova licença.
+/// </summary>
+public record CreateLicenseRequest
 {
-    public Guid CustomerId { get; set; }
+    /// <summary>
+    /// Identificador do cliente.
+    /// </summary>
+    [Required(ErrorMessage = "CustomerId é obrigatório")]
+    public required Guid CustomerId { get; init; }
 
-    public Guid ProductId { get; set; }
+    /// <summary>
+    /// Identificador do produto.
+    /// </summary>
+    [Required(ErrorMessage = "ProductId é obrigatório")]
+    public required Guid ProductId { get; init; }
 
-    public Guid PlanId { get; set; }
+    /// <summary>
+    /// Identificador do plano.
+    /// </summary>
+    [Required(ErrorMessage = "PlanId é obrigatório")]
+    public required Guid PlanId { get; init; }
 }

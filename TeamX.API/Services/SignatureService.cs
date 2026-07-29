@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.DataProtection;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 using TeamX.Core.Interfaces;
 using TeamX.Shared.DTOs;
@@ -8,39 +7,67 @@ namespace TeamX.API.Services;
 
 public class SignatureService : ISignatureService
 {
-    private const string Secret =
-    "7f3a9d2c8e1b5f6a4d9c7e2b8a1f6d3c9e5a7b2d4f8c1a6e9b3c7d5f2a8";
     public string GenerateSignature(SecureActivateRequest request, string secret)
     {
-        var data =
-            $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
+        ArgumentNullException.ThrowIfNull(request);
 
-        Console.WriteLine("API DATA:");
-        Console.WriteLine(data);
+        if (string.IsNullOrWhiteSpace(secret))
+            throw new ArgumentException("Secret é obrigatório.", nameof(secret));
 
-        using var hmac = new HMACSHA256(Encoding.UTF8.GetBytes(secret));
-        var hash = hmac.ComputeHash(Encoding.UTF8.GetBytes(data));
+        var payload = BuildPayload(request);
+        var hash = ComputeHmac(payload, secret);
 
+        // Hex uppercase (padrão do Convert.ToHexString)
         return Convert.ToHexString(hash);
     }
 
-    public bool ValidateSignature(
-        SecureActivateRequest request,
-        string secret)
+    public bool ValidateSignature(SecureActivateRequest request, string secret)
     {
-        var data =
-            $"{request.LicenseKey}|{request.HardwareFingerprint}|{request.Nonce}|{request.Timestamp}|{request.ExecutableHash}|{request.AppVersion}";
+        if (request is null ||
+            string.IsNullOrWhiteSpace(request.Signature) ||
+            string.IsNullOrWhiteSpace(secret))
+        {
+            return false;
+        }
 
-        using var hmac = new HMACSHA256(
-            Encoding.UTF8.GetBytes(secret));
+        byte[] providedHash;
+        try
+        {
+            // Aceita hex com ou sem hífens, maiúsculo/minúsculo
+            providedHash = Convert.FromHexString(request.Signature.Trim());
+        }
+        catch (FormatException)
+        {
+            return false; // assinatura malformada
+        }
 
-        var hash = hmac.ComputeHash(
-            Encoding.UTF8.GetBytes(data));
+        var payload = BuildPayload(request);
+        var expectedHash = ComputeHmac(payload, secret);
 
-        var expected = Convert.ToHexString(hash);
+        // Comparação em tempo constante nos bytes do hash (não na string hex)
+        return CryptographicOperations.FixedTimeEquals(expectedHash, providedHash);
+    }
 
-        return expected.Equals(
-            request.Signature,
-            StringComparison.OrdinalIgnoreCase);
+    private static byte[] ComputeHmac(string payload, string secret)
+    {
+        var key = Encoding.UTF8.GetBytes(secret);
+        var data = Encoding.UTF8.GetBytes(payload);
+
+        return HMACSHA256.HashData(key, data);
+    }
+
+    private static string BuildPayload(SecureActivateRequest request)
+    {
+        // Campos normalizados na mesma ordem em que o cliente assina.
+        // Null → string vazia para manter o formato estável.
+        static string N(string? value) => value?.Trim() ?? string.Empty;
+
+        return string.Join('|',
+            N(request.LicenseKey).ToUpperInvariant(),
+            N(request.HardwareFingerprint),
+            N(request.Nonce),
+            request.Timestamp.ToString(),
+            N(request.ExecutableHash),
+            N(request.AppVersion));
     }
 }

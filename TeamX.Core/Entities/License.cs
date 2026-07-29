@@ -4,42 +4,54 @@ public class License
 {
     public int Id { get; set; }
 
-    // KEY gerada para o cliente
+    /// <summary>
+    /// Chave de ativação (normalizada: UPPER, trim).
+    /// </summary>
     public string Key { get; set; } = null!;
 
-    // Pending, Active, Expired, Revoked
-    public string Status { get; set; } = "Pending";
+    /// <summary>
+    /// Pending | Active | Suspended | Expired | Revoked
+    /// </summary>
+    public string Status { get; set; } = LicenseStatuses.Pending;
 
-    // Quantos PCs podem usar
-    public int MaxDevices { get; set; }
+    /// <summary>
+    /// Limite de dispositivos. Pode espelhar o plano na criação.
+    /// </summary>
+    public int MaxDevices { get; set; } = 1;
 
-    // Se já foi ativada alguma vez
+    /// <summary>
+    /// True após a primeira ativação bem-sucedida.
+    /// </summary>
     public bool IsActivated { get; set; }
 
-    public DateTime CreatedAt { get; set; }
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
     public DateTime ExpiresAt { get; set; }
 
+    public DateTime? UpdatedAt { get; set; }
 
-    // Cliente dono
+    // ─── Relacionamentos ─────────────────────────────────────────
+
     public Guid CustomerId { get; set; }
-
     public Customer Customer { get; set; } = null!;
 
-
-    // Produto comprado
     public Guid ProductId { get; set; }
-
     public Product Product { get; set; } = null!;
 
-
-    // Plano
     public Guid PlanId { get; set; }
-
     public Plan Plan { get; set; } = null!;
 
+    public ICollection<LicenseDevice> Devices { get; set; } = new List<LicenseDevice>();
+}
 
-    // Computadores vinculados
-    public ICollection<LicenseDevice> Devices { get; set; }
-        = new List<LicenseDevice>();
+/// <summary>
+/// Evita magic strings espalhadas nos services.
+/// </summary>
+public static class LicenseStatuses
+{
+    public const string Pending = "Pending";
+    public const string Active = "Active";
+    public const string Suspended = "Suspended";
+    public const string Expired = "Expired";
+    public const string Revoked = "Revoked";
 }
