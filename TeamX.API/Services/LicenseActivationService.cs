@@ -56,7 +56,7 @@ public class LicenseActivationService : ILicenseActivationService
             return Fail("Formato de chave inválido");
 
         if (!await ValidateRequestSecurityAsync(request, ct))
-            return Fail("DEBUG-XYZ-999 segurança ainda ativa");
+            return Fail("Requisição inválida ou expirada");
 
         var license = await _context.Licenses
             .Include(x => x.Plan)
@@ -74,8 +74,6 @@ public class LicenseActivationService : ILicenseActivationService
 
         var maxDevices = ResolveMaxDevices(license);
 
-        await using var transaction = await _context.Database.BeginTransactionAsync(ct);
-
         try
         {
             var devices = await _context.LicenseDevices
@@ -88,10 +86,7 @@ public class LicenseActivationService : ILicenseActivationService
             var activeCount = devices.Count(d => d.IsActive);
 
             if (existingDevice is null && activeCount >= maxDevices)
-            {
-                await transaction.RollbackAsync(ct);
                 return Fail("Limite de dispositivos atingido", maxDevices: maxDevices);
-            }
 
             var isNewDevice = existingDevice is null;
             var now = DateTime.UtcNow;
@@ -126,7 +121,6 @@ public class LicenseActivationService : ILicenseActivationService
             license.UpdatedAt = now;
 
             await _context.SaveChangesAsync(ct);
-            await transaction.CommitAsync(ct);
 
             await _abuse.LogAsync(
                 license.Id,
@@ -159,7 +153,6 @@ public class LicenseActivationService : ILicenseActivationService
         }
         catch (Exception ex)
         {
-            await transaction.RollbackAsync(ct);
             _logger.LogError(
                 ex,
                 "Erro ao ativar licença {Key} | HW={HardwareId}",
