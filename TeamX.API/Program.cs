@@ -26,6 +26,13 @@ public class Program
 
         var builder = WebApplication.CreateBuilder(args);
 
+        // Evita inotify no Render (limite de FileSystemWatcher)
+        builder.Configuration.Sources.Clear();
+        builder.Configuration
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+            .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
+            .AddEnvironmentVariables();
+
         builder.Configuration.Sources.Clear();
         builder.Configuration
             .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
