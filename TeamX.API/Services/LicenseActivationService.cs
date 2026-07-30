@@ -166,14 +166,52 @@ public class LicenseActivationService : ILicenseActivationService
         SecureActivateRequest request,
         CancellationToken ct)
     {
-        _logger.LogWarning("SECURITY BYPASS ATIVO");
-        return true; // ← obrigatório
+        if (string.IsNullOrWhiteSpace(request.Nonce))
+            return false;
+
+        var signingSecret = _configuration["Activation:SigningSecret"];
+        if (string.IsNullOrWhiteSpace(signingSecret) || signingSecret.Length < 32)
+        {
+            _logger.LogError("Activation:SigningSecret não configurado ou muito curto");
+            return false;
+        }
+
+        if (string.IsNullOrWhiteSpace(request.Signature))
+            return false;
+
+        if (!_signatureService.ValidateSignature(request, signingSecret))
+        {
+            _logger.LogWarning("Assinatura de ativação inválida");
+            return false;
+        }
+
+        var requestTime = DateTimeOffset.FromUnixTimeSeconds(request.Timestamp);
+        var diff = (DateTimeOffset.UtcNow - requestTime).Duration();
+
+        if (diff > TimeSpan.FromMinutes(5))
+        {
+            _logger.LogWarning(
+                "Timestamp fora da janela. Diff={DiffSeconds}s Ts={Timestamp}",
+                diff.TotalSeconds,
+                request.Timestamp);
+            return false;
+        }
+
+        if (await _nonceService.IsNonceUsedAsync(request.Nonce, ct))
+        {
+            _logger.LogWarning("Nonce reutilizado");
+            return false;
+        }
+
+        await _nonceService.MarkNonceAsUsedAsync(request.Nonce, TimeSpan.FromMinutes(5), ct);
+        return true;
     }
 
     private static int ResolveMaxDevices(License license)
     {
         if (license.MaxDevices > 0)
             return license.MaxDevices;
+
         return license.Plan?.MaxDevices ?? 1;
     }
 
@@ -195,6 +233,7 @@ public class LicenseActivationService : ILicenseActivationService
     {
         if (string.IsNullOrEmpty(key) || key.Length < 8)
             return "***";
+
         return $"{key[..4]}...{key[^4..]}";
     }
 }
