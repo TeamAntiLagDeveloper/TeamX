@@ -3,19 +3,12 @@ using TeamX.Core.Entities;
 
 namespace TeamX.Data.Context;
 
-/// <summary>
-/// Contexto principal do Entity Framework Core da aplicação TeamX.
-/// </summary>
 public sealed class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
     }
-
-    // ========================
-    // DbSets
-    // ========================
 
     public DbSet<Customer> Customers => Set<Customer>();
     public DbSet<Product> Products => Set<Product>();
@@ -27,15 +20,9 @@ public sealed class ApplicationDbContext : DbContext
     public DbSet<RevokedToken> RevokedTokens => Set<RevokedToken>();
     public DbSet<UsedNonce> UsedNonces => Set<UsedNonce>();
 
-    // ========================
-    // Configuration
-    // ========================
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
-
-        // Aplica automaticamente todas as IEntityTypeConfiguration do assembly
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
 }

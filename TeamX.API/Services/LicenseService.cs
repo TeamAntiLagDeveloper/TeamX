@@ -25,46 +25,7 @@ public class LicenseService : ILicenseService
         _logger = logger;
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Lookups auxiliares
-    // ─────────────────────────────────────────────────────────────
-
-    public async Task<Product?> GetTeamXProductAsync(
-        string variantId,
-        CancellationToken ct = default)
-    {
-        if (string.IsNullOrWhiteSpace(variantId))
-            return null;
-
-        var plan = await _context.Plans
-            .AsNoTracking()
-            .Where(x => x.Code == variantId && x.IsActive)
-            .Select(x => new { x.ProductId })
-            .FirstOrDefaultAsync(ct);
-
-        if (plan is null)
-            return null;
-
-        return await _context.Products
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Id == plan.ProductId && x.IsActive, ct);
-    }
-
-    public async Task<Plan?> GetTeamXPlanAsync(
-        string variantId,
-        CancellationToken ct = default)
-    {
-        if (string.IsNullOrWhiteSpace(variantId))
-            return null;
-
-        return await _context.Plans
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.Code == variantId && x.IsActive, ct);
-    }
-
-    public async Task<License?> GetByKeyAsync(
-        string key,
-        CancellationToken ct = default)
+    public async Task<License?> GetByKeyAsync(string key, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(key))
             return null;
@@ -79,9 +40,7 @@ public class LicenseService : ILicenseService
             .FirstOrDefaultAsync(x => x.Key == normalizedKey, ct);
     }
 
-    public async Task<License?> GetByKeyWithDevicesAsync(
-        string key,
-        CancellationToken ct = default)
+    public async Task<License?> GetByKeyWithDevicesAsync(string key, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(key))
             return null;
@@ -94,13 +53,7 @@ public class LicenseService : ILicenseService
             .FirstOrDefaultAsync(x => x.Key == normalizedKey, ct);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Validação (leve — não carrega o grafo inteiro)
-    // ─────────────────────────────────────────────────────────────
-
-    public async Task<bool> ValidateAsync(
-        string key,
-        CancellationToken ct = default)
+    public async Task<bool> ValidateAsync(string key, CancellationToken ct = default)
     {
         if (string.IsNullOrWhiteSpace(key))
             return false;
@@ -117,15 +70,18 @@ public class LicenseService : ILicenseService
                 ct);
     }
 
-    // ─────────────────────────────────────────────────────────────
-    // Criação
-    // ─────────────────────────────────────────────────────────────
-
     public async Task<License> CreateLicenseAsync(
         CreateLicenseRequest request,
         CancellationToken ct = default)
     {
         ArgumentNullException.ThrowIfNull(request);
+
+        if (request.CustomerId == Guid.Empty ||
+            request.ProductId == Guid.Empty ||
+            request.PlanId == Guid.Empty)
+        {
+            throw new ArgumentException("CustomerId, ProductId e PlanId são obrigatórios.");
+        }
 
         var plan = await _context.Plans
             .AsNoTracking()
@@ -133,8 +89,8 @@ public class LicenseService : ILicenseService
             ?? throw new InvalidOperationException($"Plano {request.PlanId} não encontrado.");
 
         var expiresAt = plan.IsLifetime
-            ? DateTime.UtcNow.AddYears(100)   // evita DateTime.MaxValue (problemas em alguns bancos)
-            : DateTime.UtcNow.AddDays(plan.DurationDays);
+            ? DateTime.UtcNow.AddYears(100)
+            : DateTime.UtcNow.AddDays(Math.Max(plan.DurationDays, 1));
 
         var license = new License
         {
@@ -145,7 +101,8 @@ public class LicenseService : ILicenseService
             CustomerId = request.CustomerId,
             ProductId = request.ProductId,
             PlanId = request.PlanId,
-            MaxDevices = plan.MaxDevices
+            MaxDevices = Math.Max(plan.MaxDevices, 1),
+            IsActivated = false
         };
 
         _context.Licenses.Add(license);
@@ -164,7 +121,7 @@ public class LicenseService : ILicenseService
         Guid customerId,
         Guid productId,
         Guid planId,
-        int durationDays,
+        int maxDevices,
         DateTime expiresAt,
         CancellationToken ct = default)
     {
@@ -182,7 +139,8 @@ public class LicenseService : ILicenseService
             CustomerId = customerId,
             ProductId = productId,
             PlanId = planId,
-            MaxDevices = plan.MaxDevices
+            MaxDevices = maxDevices > 0 ? maxDevices : Math.Max(plan.MaxDevices, 1),
+            IsActivated = false
         };
 
         _context.Licenses.Add(license);
@@ -196,10 +154,6 @@ public class LicenseService : ILicenseService
 
         return license;
     }
-
-    // ─────────────────────────────────────────────────────────────
-    // Helpers privados
-    // ─────────────────────────────────────────────────────────────
 
     private async Task<string> GenerateUniqueKeyAsync(CancellationToken ct)
     {
@@ -226,7 +180,6 @@ public class LicenseService : ILicenseService
     {
         if (string.IsNullOrEmpty(key) || key.Length < 8)
             return "***";
-
         return $"{key[..4]}...{key[^4..]}";
     }
 }

@@ -8,19 +8,13 @@ public class AbuseScanOptions
 {
     public const string SectionName = "AbuseScan";
 
-    /// <summary>
-    /// Intervalo entre scans (padrão: 24 horas)
-    /// </summary>
+    /// <summary>Intervalo entre scans (padrão: 24 horas).</summary>
     public TimeSpan Interval { get; set; } = TimeSpan.FromHours(24);
 
-    /// <summary>
-    /// Atraso inicial antes do primeiro scan (evita pico no startup)
-    /// </summary>
+    /// <summary>Atraso inicial antes do primeiro scan.</summary>
     public TimeSpan StartupDelay { get; set; } = TimeSpan.FromMinutes(2);
 
-    /// <summary>
-    /// Se true, realmente suspende as licenças detectadas
-    /// </summary>
+    /// <summary>Se true, EvaluateLicenseAsync pode suspender licenças abusivas.</summary>
     public bool AutoSuspend { get; set; } = true;
 }
 
@@ -47,7 +41,6 @@ public class AbuseScanBackgroundService : BackgroundService
             _options.Interval,
             _options.AutoSuspend);
 
-        // Aguarda um pouco no startup para não competir com o boot da aplicação
         try
         {
             await Task.Delay(_options.StartupDelay, stoppingToken);
@@ -59,17 +52,26 @@ public class AbuseScanBackgroundService : BackgroundService
 
         using var timer = new PeriodicTimer(_options.Interval);
 
-        // Executa imediatamente no primeiro ciclo
         await RunScanAsync(stoppingToken);
 
-        while (await timer.WaitForNextTickAsync(stoppingToken))
+        try
         {
-            await RunScanAsync(stoppingToken);
+            while (await timer.WaitForNextTickAsync(stoppingToken))
+            {
+                await RunScanAsync(stoppingToken);
+            }
+        }
+        catch (OperationCanceledException) when (stoppingToken.IsCancellationRequested)
+        {
+            // shutdown normal
         }
     }
 
     private async Task RunScanAsync(CancellationToken ct)
     {
+        if (ct.IsCancellationRequested)
+            return;
+
         _logger.LogInformation("Iniciando scan de abuso de licenças...");
 
         try
@@ -78,7 +80,6 @@ public class AbuseScanBackgroundService : BackgroundService
             var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
             var abuseService = scope.ServiceProvider.GetRequiredService<AbuseDetectionService>();
 
-            // Query eficiente: só busca o necessário e já filtra no banco
             var suspiciousLicenseIds = await db.Licenses
                 .AsNoTracking()
                 .Where(l => l.Status != "Revoked" && l.Status != "Suspended")
@@ -96,7 +97,15 @@ public class AbuseScanBackgroundService : BackgroundService
                 "Scan encontrou {Count} licença(s) com mais devices ativos que o permitido",
                 suspiciousLicenseIds.Count);
 
-            var suspendedCount = 0;
+            if (!_options.AutoSuspend)
+            {
+                _logger.LogInformation(
+                    "AutoSuspend=false — apenas detecção. IDs: {Ids}",
+                    string.Join(", ", suspiciousLicenseIds));
+                return;
+            }
+
+            var evaluated = 0;
 
             foreach (var licenseId in suspiciousLicenseIds)
             {
@@ -105,32 +114,26 @@ public class AbuseScanBackgroundService : BackgroundService
 
                 try
                 {
-                    // Reutiliza a lógica completa de detecção (HW, IP, devices, etc.)
                     await abuseService.EvaluateLicenseAsync(licenseId, ct);
-
-                    if (_options.AutoSuspend)
-                    {
-                        // EvaluateLicenseAsync já suspende quando detecta abuso.
-                        // Aqui só contamos para o log final.
-                        suspendedCount++;
-                    }
+                    evaluated++;
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex,
+                    _logger.LogError(
+                        ex,
                         "Erro ao avaliar licença {LicenseId} durante o scan de abuso",
                         licenseId);
                 }
             }
 
             _logger.LogInformation(
-                "Scan finalizado. Licenças avaliadas: {Total}. Ações tomadas: {Suspended}",
+                "Scan finalizado. Suspeitas: {Total}. Avaliadas: {Evaluated}",
                 suspiciousLicenseIds.Count,
-                suspendedCount);
+                evaluated);
         }
         catch (OperationCanceledException) when (ct.IsCancellationRequested)
         {
-            // Shutdown normal — não loga como erro
+            // shutdown
         }
         catch (Exception ex)
         {

@@ -13,14 +13,11 @@ public class Order
     public Guid PlanId { get; set; }
     public Plan Plan { get; set; } = null!;
 
-    /// <summary>
-    /// Preenchido após a licença ser gerada e vinculada.
-    /// </summary>
     public int? LicenseId { get; set; }
     public License? License { get; set; }
 
     /// <summary>
-    /// E-mail normalizado (trim + lower) no momento da compra.
+    /// E-mail normalizado no momento da compra.
     /// </summary>
     public string CustomerEmail { get; set; } = string.Empty;
 
@@ -30,7 +27,7 @@ public class Order
     public string Status { get; set; } = OrderStatuses.Paid;
 
     /// <summary>
-    /// ID da transação no gateway (Eremby, etc.). Deve ser único.
+    /// ID da transação no gateway. Deve ser único.
     /// </summary>
     public string TransactionId { get; set; } = string.Empty;
 

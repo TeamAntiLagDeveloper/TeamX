@@ -40,21 +40,45 @@ public class ExceptionMiddleware
 
     private async Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        // Evita escrever na response se ela já começou a ser enviada
         if (context.Response.HasStarted)
         {
-            _logger.LogWarning(exception, "A response já havia iniciado. Não foi possível tratar a exception.");
-            throw new InvalidOperationException("...");
+            _logger.LogWarning(
+                exception,
+                "Response já iniciada. Exception não mapeada. Path: {Path}",
+                context.Request.Path);
+            return;
+        }
+
+        // Cliente cancelou / request abortada — não tratar como erro de servidor
+        if (exception is OperationCanceledException &&
+            context.RequestAborted.IsCancellationRequested)
+        {
+            _logger.LogDebug(
+                "Request cancelada pelo cliente. Path: {Path}",
+                context.Request.Path);
+            return;
         }
 
         var (statusCode, title, detail) = MapException(exception);
 
-        _logger.LogError(
-            exception,
-            "Erro não tratado | Path: {Path} | Method: {Method} | Status: {StatusCode}",
-            context.Request.Path,
-            context.Request.Method,
-            statusCode);
+        if (statusCode >= 500)
+        {
+            _logger.LogError(
+                exception,
+                "Erro não tratado | Path: {Path} | Method: {Method} | Status: {StatusCode}",
+                context.Request.Path,
+                context.Request.Method,
+                statusCode);
+        }
+        else
+        {
+            _logger.LogWarning(
+                exception,
+                "Falha tratada | Path: {Path} | Method: {Method} | Status: {StatusCode}",
+                context.Request.Path,
+                context.Request.Method,
+                statusCode);
+        }
 
         context.Response.ContentType = "application/problem+json";
         context.Response.StatusCode = statusCode;
@@ -63,25 +87,26 @@ public class ExceptionMiddleware
         {
             Status = statusCode,
             Title = title,
-            Detail = _env.IsDevelopment() ? detail : null,
+            Detail = _env.IsDevelopment() ? detail : GetPublicDetail(statusCode, detail),
             Instance = context.Request.Path
         };
 
-        // Adiciona o stack trace apenas em Development
         if (_env.IsDevelopment())
         {
             problemDetails.Extensions["exception"] = exception.GetType().Name;
             problemDetails.Extensions["stackTrace"] = exception.StackTrace;
         }
 
-        // Correlação (útil para rastrear logs)
-        if (context.TraceIdentifier is not null)
-        {
-            problemDetails.Extensions["traceId"] = context.TraceIdentifier;
-        }
+        problemDetails.Extensions["traceId"] = context.TraceIdentifier;
 
         var json = JsonSerializer.Serialize(problemDetails, JsonOptions);
         await context.Response.WriteAsync(json);
+    }
+
+    private static string? GetPublicDetail(int statusCode, string detail)
+    {
+        // Em produção: mensagens de 4xx podem ir ao cliente; 5xx ficam genéricas
+        return statusCode is >= 400 and < 500 ? detail : null;
     }
 
     private static (int statusCode, string title, string detail) MapException(Exception exception)
@@ -97,8 +122,9 @@ public class ExceptionMiddleware
             KeyNotFoundException or FileNotFoundException =>
                 ((int)HttpStatusCode.NotFound, "Recurso não encontrado", exception.Message),
 
+            // Regras de negócio (plano inexistente, limite, etc.)
             InvalidOperationException =>
-                ((int)HttpStatusCode.Conflict, "Operação inválida", exception.Message),
+                ((int)HttpStatusCode.BadRequest, "Operação inválida", exception.Message),
 
             NotImplementedException =>
                 ((int)HttpStatusCode.NotImplemented, "Funcionalidade não implementada", exception.Message),

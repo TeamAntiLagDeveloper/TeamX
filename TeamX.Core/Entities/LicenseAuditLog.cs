@@ -8,7 +8,7 @@ public class LicenseAuditLog
     public License? License { get; set; }
 
     /// <summary>
-    /// Activate | Heartbeat | Abuse | Revoke | Validate | Suspend...
+    /// Activate | Heartbeat | Abuse | Revoke | Validate | Suspend
     /// </summary>
     public string EventType { get; set; } = string.Empty;
 

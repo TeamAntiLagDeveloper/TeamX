@@ -2,14 +2,8 @@
 
 namespace TeamX.Core.Interfaces;
 
-/// <summary>
-/// Serviço responsável pelas operações de pedidos (Orders).
-/// </summary>
 public interface IOrderService
 {
-    /// <summary>
-    /// Cria um novo pedido.
-    /// </summary>
     Task<Order> CreateAsync(
         Guid customerId,
         Guid productId,
@@ -18,9 +12,6 @@ public interface IOrderService
         string transactionId,
         CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Associa uma licença a um pedido existente.
-    /// </summary>
     Task<bool> UpdateLicenseAsync(
         Guid orderId,
         int licenseId,

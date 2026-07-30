@@ -5,7 +5,7 @@ public class License
     public int Id { get; set; }
 
     /// <summary>
-    /// Chave de ativação (normalizada: UPPER, trim).
+    /// Chave de ativação (UPPER + trim).
     /// </summary>
     public string Key { get; set; } = null!;
 
@@ -14,9 +14,6 @@ public class License
     /// </summary>
     public string Status { get; set; } = LicenseStatuses.Pending;
 
-    /// <summary>
-    /// Limite de dispositivos. Pode espelhar o plano na criação.
-    /// </summary>
     public int MaxDevices { get; set; } = 1;
 
     /// <summary>
@@ -30,8 +27,6 @@ public class License
 
     public DateTime? UpdatedAt { get; set; }
 
-    // ─── Relacionamentos ─────────────────────────────────────────
-
     public Guid CustomerId { get; set; }
     public Customer Customer { get; set; } = null!;
 
@@ -44,9 +39,6 @@ public class License
     public ICollection<LicenseDevice> Devices { get; set; } = new List<LicenseDevice>();
 }
 
-/// <summary>
-/// Evita magic strings espalhadas nos services.
-/// </summary>
 public static class LicenseStatuses
 {
     public const string Pending = "Pending";

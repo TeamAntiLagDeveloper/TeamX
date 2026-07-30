@@ -1,6 +1,3 @@
-# Ignore o projeto TeamX.App
-TeamX.App/
-
 # Visual Studio
 .vs/
 **/.vs/
@@ -14,12 +11,15 @@ obj/
 *.suo
 *.sln.docstates
 
-# Environment
-.env
-appsettings.Development.json
+# Logs
+*.log
 
 # Publish
 publish/
+
+# Environment
+.env
+appsettings.Development.json
 
 # Logs
 Logs/

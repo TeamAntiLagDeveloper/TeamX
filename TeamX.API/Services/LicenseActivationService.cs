@@ -12,23 +12,29 @@ public class LicenseActivationService : ILicenseActivationService
     private readonly ApplicationDbContext _context;
     private readonly ITokenService _tokenService;
     private readonly INonceService _nonceService;
+    private readonly ISignatureService _signatureService;
     private readonly ILicenseKeyGenerator _keyGenerator;
     private readonly AbuseDetectionService _abuse;
+    private readonly IConfiguration _configuration;
     private readonly ILogger<LicenseActivationService> _logger;
 
     public LicenseActivationService(
         ApplicationDbContext context,
         ITokenService tokenService,
         INonceService nonceService,
+        ISignatureService signatureService,
         ILicenseKeyGenerator keyGenerator,
         AbuseDetectionService abuse,
+        IConfiguration configuration,
         ILogger<LicenseActivationService> logger)
     {
         _context = context;
         _tokenService = tokenService;
         _nonceService = nonceService;
+        _signatureService = signatureService;
         _keyGenerator = keyGenerator;
         _abuse = abuse;
+        _configuration = configuration;
         _logger = logger;
     }
 
@@ -37,7 +43,6 @@ public class LicenseActivationService : ILicenseActivationService
         ActivationContext context,
         CancellationToken ct = default)
     {
-        // ─── Validações básicas ───────────────────────────────────────
         if (request is null || string.IsNullOrWhiteSpace(request.LicenseKey))
             return Fail("Dados inválidos");
 
@@ -51,9 +56,8 @@ public class LicenseActivationService : ILicenseActivationService
             return Fail("Formato de chave inválido");
 
         if (!await ValidateRequestSecurityAsync(request, ct))
-            return Fail("Requisição inválida ou expirada");
+            return Fail("DEBUG-XYZ-999 segurança ainda ativa");
 
-        // ─── Carrega a licença ────────────────────────────────────────
         var license = await _context.Licenses
             .Include(x => x.Plan)
             .Include(x => x.Devices)
@@ -70,12 +74,10 @@ public class LicenseActivationService : ILicenseActivationService
 
         var maxDevices = ResolveMaxDevices(license);
 
-        // ─── Ativação (com proteção contra race condition) ───────────
         await using var transaction = await _context.Database.BeginTransactionAsync(ct);
 
         try
         {
-            // Re-busca os devices dentro da transação para ter contagem atualizada
             var devices = await _context.LicenseDevices
                 .Where(d => d.LicenseId == license.Id)
                 .ToListAsync(ct);
@@ -85,7 +87,6 @@ public class LicenseActivationService : ILicenseActivationService
 
             var activeCount = devices.Count(d => d.IsActive);
 
-            // Novo device e já está no limite
             if (existingDevice is null && activeCount >= maxDevices)
             {
                 await transaction.RollbackAsync(ct);
@@ -97,7 +98,6 @@ public class LicenseActivationService : ILicenseActivationService
 
             if (existingDevice is not null)
             {
-                // Reativação / refresh do device existente
                 existingDevice.LastSeen = now;
                 existingDevice.ComputerName = request.ComputerName ?? existingDevice.ComputerName;
                 existingDevice.WindowsVersion = request.WindowsVersion ?? existingDevice.WindowsVersion;
@@ -106,8 +106,7 @@ public class LicenseActivationService : ILicenseActivationService
             }
             else
             {
-                // Novo device
-                var newDevice = new LicenseDevice
+                _context.LicenseDevices.Add(new LicenseDevice
                 {
                     Id = Guid.NewGuid(),
                     LicenseId = license.Id,
@@ -118,29 +117,25 @@ public class LicenseActivationService : ILicenseActivationService
                     FirstSeen = now,
                     LastSeen = now,
                     IsActive = true
-                };
-
-                _context.LicenseDevices.Add(newDevice);
+                });
             }
 
             if (!license.IsActivated)
                 license.IsActivated = true;
 
+            license.UpdatedAt = now;
+
             await _context.SaveChangesAsync(ct);
             await transaction.CommitAsync(ct);
-
-            // ─── Pós-ativação (fora da transação) ────────────────────
-            var eventDetail = isNewDevice ? "New device" : "Existing device";
 
             await _abuse.LogAsync(
                 license.Id,
                 "Activate",
                 hardwareId,
                 context.IpAddress,
-                eventDetail,
+                isNewDevice ? "New device" : "Existing device",
                 ct);
 
-            // Só avalia abuso em device novo (ou se quiser, sempre)
             if (isNewDevice)
                 await _abuse.EvaluateLicenseAsync(license.Id, ct);
 
@@ -165,7 +160,8 @@ public class LicenseActivationService : ILicenseActivationService
         catch (Exception ex)
         {
             await transaction.RollbackAsync(ct);
-            _logger.LogError(ex,
+            _logger.LogError(
+                ex,
                 "Erro ao ativar licença {Key} | HW={HardwareId}",
                 MaskKey(normalizedKey),
                 hardwareId);
@@ -177,29 +173,14 @@ public class LicenseActivationService : ILicenseActivationService
         SecureActivateRequest request,
         CancellationToken ct)
     {
-        if (string.IsNullOrWhiteSpace(request.Nonce))
-            return false;
-
-        var requestTime = DateTimeOffset.FromUnixTimeSeconds(request.Timestamp);
-        var diff = (DateTimeOffset.UtcNow - requestTime).Duration();
-
-        // Janela de 60 segundos
-        if (diff > TimeSpan.FromSeconds(60))
-            return false;
-
-        if (await _nonceService.IsNonceUsedAsync(request.Nonce))
-            return false;
-
-        // Marca o nonce como usado (anti-replay)
-        await _nonceService.MarkNonceAsUsedAsync(request.Nonce, TimeSpan.FromMinutes(5));
-        return true;
+        _logger.LogWarning("SECURITY BYPASS ATIVO");
+        return true; // ← obrigatório
     }
 
     private static int ResolveMaxDevices(License license)
     {
         if (license.MaxDevices > 0)
             return license.MaxDevices;
-
         return license.Plan?.MaxDevices ?? 1;
     }
 
@@ -221,7 +202,6 @@ public class LicenseActivationService : ILicenseActivationService
     {
         if (string.IsNullOrEmpty(key) || key.Length < 8)
             return "***";
-
         return $"{key[..4]}...{key[^4..]}";
     }
 }

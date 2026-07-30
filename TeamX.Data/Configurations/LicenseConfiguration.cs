@@ -4,66 +4,55 @@ using TeamX.Core.Entities;
 
 namespace TeamX.Data.Configurations;
 
-/// <summary>
-/// Configuração do Entity Framework Core para a entidade <see cref="License"/>.
-/// </summary>
 public sealed class LicenseConfiguration : IEntityTypeConfiguration<License>
 {
     public void Configure(EntityTypeBuilder<License> builder)
     {
         builder.ToTable("Licenses");
-
         builder.HasKey(x => x.Id);
 
-        // ========================
-        // Properties
-        // ========================
-
         builder.Property(x => x.Key)
-               .IsRequired()
-               .HasMaxLength(24);
+            .IsRequired()
+            .HasMaxLength(32);
 
+        // Status já é string no domínio (LicenseStatuses.*)
         builder.Property(x => x.Status)
-               .HasConversion<string>()
-               .HasMaxLength(20)
-               .IsRequired();
+            .IsRequired()
+            .HasMaxLength(20);
 
-        builder.Property(x => x.CreatedAt)
-               .IsRequired();
+        builder.Property(x => x.MaxDevices)
+            .IsRequired()
+            .HasDefaultValue(1);
 
-        // ========================
-        // Indexes
-        // ========================
+        builder.Property(x => x.IsActivated)
+            .IsRequired()
+            .HasDefaultValue(false);
 
-        builder.HasIndex(x => x.Key)
-               .IsUnique();
+        builder.Property(x => x.CreatedAt).IsRequired();
+        builder.Property(x => x.ExpiresAt).IsRequired();
 
-        // ========================
-        // Relationships
-        // ========================
+        builder.HasIndex(x => x.Key).IsUnique();
+        builder.HasIndex(x => x.Status);
+        builder.HasIndex(x => x.CustomerId);
 
-        // Customer 1:N License
         builder.HasOne(x => x.Customer)
-               .WithMany(x => x.Licenses)
-               .HasForeignKey(x => x.CustomerId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(x => x.Licenses)
+            .HasForeignKey(x => x.CustomerId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        // Product 1:N License
         builder.HasOne(x => x.Product)
-               .WithMany(x => x.Licenses)
-               .HasForeignKey(x => x.ProductId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(x => x.Licenses)
+            .HasForeignKey(x => x.ProductId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        // Plan 1:N License
         builder.HasOne(x => x.Plan)
-               .WithMany(x => x.Licenses)
-               .HasForeignKey(x => x.PlanId)
-               .OnDelete(DeleteBehavior.Restrict);
+            .WithMany(x => x.Licenses)
+            .HasForeignKey(x => x.PlanId)
+            .OnDelete(DeleteBehavior.Restrict);
 
-        // License 1:N LicenseDevice
         builder.HasMany(x => x.Devices)
-               .WithOne(x => x.License)
-               .HasForeignKey(x => x.LicenseId)
-               .OnDelete(DeleteBehavior.Cascade);
+            .WithOne(x => x.License)
+            .HasForeignKey(x => x.LicenseId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 }

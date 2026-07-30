@@ -25,17 +25,14 @@ public class CustomerService : ICustomerService
         if (string.IsNullOrWhiteSpace(email))
             throw new ArgumentException("Email é obrigatório.", nameof(email));
 
-        // Normaliza: remove espaços e força minúsculo
         email = email.Trim().ToLowerInvariant();
 
-        // 1ª tentativa: busca
         var customer = await _context.Customers
             .FirstOrDefaultAsync(x => x.Email == email, ct);
 
         if (customer is not null)
             return customer;
 
-        // 2ª tentativa: cria
         customer = new Customer
         {
             Id = Guid.NewGuid(),
@@ -55,19 +52,17 @@ public class CustomerService : ICustomerService
         }
         catch (DbUpdateException ex) when (IsUniqueConstraintViolation(ex))
         {
-            // Race condition: outro request criou o mesmo email quase ao mesmo tempo
             _logger.LogDebug(
                 "Cliente {Email} já existia (race condition). Buscando novamente...",
                 email);
 
-            // Limpa o change tracker para não ficar com entidade "Added" inválida
             _context.Entry(customer).State = EntityState.Detached;
 
             customer = await _context.Customers
                 .FirstOrDefaultAsync(x => x.Email == email, ct);
 
             if (customer is null)
-                throw; // algo muito estranho aconteceu
+                throw;
 
             return customer;
         }
@@ -76,19 +71,14 @@ public class CustomerService : ICustomerService
     private static string ExtractNameFromEmail(string email)
     {
         var localPart = email.Split('@')[0];
-
-        // Remove pontos e números no final se quiser um nome um pouco mais limpo
-        // Ex: "joao.silva.123" → "joao.silva"
-        return localPart.Length > 0
-            ? localPart
-            : "Cliente";
+        return localPart.Length > 0 ? localPart : "Cliente";
     }
 
     private static bool IsUniqueConstraintViolation(DbUpdateException ex)
     {
-        // Funciona com SQL Server e PostgreSQL (Npgsql)
-        return ex.InnerException?.Message.Contains("unique", StringComparison.OrdinalIgnoreCase) == true
-            || ex.InnerException?.Message.Contains("duplicate", StringComparison.OrdinalIgnoreCase) == true
-            || ex.InnerException?.Message.Contains("IX_", StringComparison.OrdinalIgnoreCase) == true;
+        var msg = ex.InnerException?.Message ?? string.Empty;
+        return msg.Contains("unique", StringComparison.OrdinalIgnoreCase)
+            || msg.Contains("duplicate", StringComparison.OrdinalIgnoreCase)
+            || msg.Contains("IX_", StringComparison.OrdinalIgnoreCase);
     }
 }

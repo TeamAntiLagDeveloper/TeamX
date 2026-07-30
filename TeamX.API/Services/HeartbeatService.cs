@@ -28,24 +28,22 @@ public class HeartbeatService : IHeartbeatService
         if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(hardwareFingerprint))
             return false;
 
-        var validation = await _tokenService.ValidateTokenAsync(token, hardwareFingerprint);
+        var hw = hardwareFingerprint.Trim();
+        var validation = await _tokenService.ValidateTokenAsync(token, hw, ct);
+
         if (!validation.IsValid)
         {
-            _logger.LogDebug(
-                "Heartbeat rejeitado: token inválido. HW={HardwareId}",
-                hardwareFingerprint);
+            _logger.LogDebug("Heartbeat rejeitado: token inválido. HW={HardwareId}", hw);
             return false;
         }
 
-        // Atualiza diretamente no banco (sem carregar a entidade inteira)
-        // Filtra também pelo LicenseId do token para evitar atualizar device de outra licença
         var rowsAffected = await _context.LicenseDevices
             .Where(d =>
-                d.HardwareId == hardwareFingerprint &&
+                d.HardwareId == hw &&
                 d.IsActive &&
-                d.LicenseId == validation.LicenseId)   // <-- importante
-            .ExecuteUpdateAsync(setters => setters
-                .SetProperty(d => d.LastSeen, DateTime.UtcNow),
+                d.LicenseId == validation.LicenseId)
+            .ExecuteUpdateAsync(
+                setters => setters.SetProperty(d => d.LastSeen, DateTime.UtcNow),
                 ct);
 
         if (rowsAffected == 0)
@@ -53,7 +51,7 @@ public class HeartbeatService : IHeartbeatService
             _logger.LogWarning(
                 "Heartbeat: device não encontrado ou inativo. LicenseId={LicenseId} HW={HardwareId}",
                 validation.LicenseId,
-                hardwareFingerprint);
+                hw);
             return false;
         }
 
@@ -68,15 +66,15 @@ public class HeartbeatService : IHeartbeatService
         if (string.IsNullOrWhiteSpace(token) || string.IsNullOrWhiteSpace(hardwareFingerprint))
             return false;
 
-        var validation = await _tokenService.ValidateTokenAsync(token, hardwareFingerprint);
+        var hw = hardwareFingerprint.Trim();
+        var validation = await _tokenService.ValidateTokenAsync(token, hw, ct);
         if (!validation.IsValid)
             return false;
 
-        // Verifica existência + vínculo com a licença do token
         return await _context.LicenseDevices
             .AsNoTracking()
             .AnyAsync(d =>
-                d.HardwareId == hardwareFingerprint &&
+                d.HardwareId == hw &&
                 d.IsActive &&
                 d.LicenseId == validation.LicenseId,
                 ct);

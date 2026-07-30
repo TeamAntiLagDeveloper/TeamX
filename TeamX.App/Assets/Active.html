@@ -1,0 +1,1083 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TeamX - Activation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8B5CF6;
+            --primary-dark: #6D28D9;
+            --bg-color: #09090b;
+            --bg-panel: #050506;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --text-main: #FAFAFA;
+            --text-muted: #A1A1AA;
+            --success: #10B981;
+            --success-bg: rgba(16, 185, 129, 0.05);
+            --error: #EF4444;
+            --font-family: 'Inter', sans-serif;
+            --input-bg: rgba(0, 0, 0, 0.2);
+            --overlay-bg: rgba(0, 0, 0, 0.6);
+        }
+
+        body.light-theme {
+            --bg-color: #f4f4f5;
+            --bg-panel: #ffffff;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --text-main: #09090b;
+            --text-muted: #71717a;
+            --input-bg: #f4f4f5;
+            --overlay-bg: rgba(255, 255, 255, 0.5);
+        }
+
+            body.light-theme .x-mark {
+                background: linear-gradient(135deg, #09090b 30%, var(--primary) 100%);
+                -webkit-background-clip: text;
+            }
+
+            body.light-theme .split-left {
+                border-right: 1px solid rgba(0, 0, 0, 0.05);
+            }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.4s ease, color 0.4s ease;
+        }
+
+        .window-controls {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 50;
+        }
+
+        .control-btn {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            width: 32px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+            .control-btn:hover {
+                background: var(--primary);
+                color: white;
+                border-color: var(--primary);
+            }
+
+            .control-btn.close-btn:hover {
+                background: var(--error);
+                border-color: var(--error);
+            }
+
+        .settings-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: var(--overlay-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+            .settings-overlay.active {
+                opacity: 1;
+                pointer-events: all;
+            }
+
+        .settings-modal {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            transform: translateY(20px) scale(0.95);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .settings-overlay.active .settings-modal {
+            transform: translateY(0) scale(1);
+        }
+
+        .settings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+            .settings-header h2 {
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+        .settings-body {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-height: 60vh;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+            .settings-body::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            .settings-body::-webkit-scrollbar-track {
+                background: transparent;
+            }
+
+            .settings-body::-webkit-scrollbar-thumb {
+                background: var(--border-color);
+                border-radius: 4px;
+            }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+        }
+
+        .setting-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .setting-title {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .setting-desc {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 44px;
+            height: 24px;
+        }
+
+            .switch input {
+                opacity: 0;
+                width: 0;
+                height: 0;
+            }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(161, 161, 170, 0.3);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+            .slider:before {
+                position: absolute;
+                content: "";
+                height: 18px;
+                width: 18px;
+                left: 3px;
+                bottom: 3px;
+                background-color: white;
+                transition: .4s;
+                border-radius: 50%;
+            }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+            input:checked + .slider:before {
+                transform: translateX(20px);
+            }
+
+        .custom-select {
+            background: var(--bg-panel);
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 12px;
+            border-radius: 6px;
+            outline: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .screen {
+            display: none;
+            width: 100%;
+            height: 100%;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+            .screen.active {
+                display: flex;
+            }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .x-mark {
+            font-size: 80px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF 30%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            letter-spacing: -2px;
+            transition: all 0.5s ease;
+        }
+
+        .pulse-anim {
+            animation: pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            margin-bottom: 50px;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(0.97);
+                opacity: 0.7;
+            }
+        }
+
+        .float-anim {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        #loading {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-wrapper {
+            width: 100%;
+            max-width: 280px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .progress-track {
+            flex: 1;
+            height: 3px;
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 4px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+            .progress-bar::after {
+                content: '';
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                width: 20px;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
+                border-radius: 4px;
+                opacity: 0.5;
+            }
+
+        .loading-counter {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+            min-width: 35px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .loading-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-muted);
+            font-size: 13px;
+            height: 20px;
+        }
+
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .split-left {
+            flex: 0.40;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-right: 1px solid var(--border-color);
+            background-color: var(--bg-panel);
+            position: relative;
+            transition: background-color 1s ease;
+        }
+
+            .split-left.success-state {
+                background: radial-gradient(circle at center, var(--success-bg) 0%, var(--bg-panel) 70%);
+            }
+
+                .split-left.success-state .x-mark {
+                    background: linear-gradient(135deg, #FFFFFF 30%, var(--success) 100%);
+                    -webkit-background-clip: text;
+                    -webkit-text-fill-color: transparent;
+                }
+
+            .split-left .x-mark {
+                font-size: 130px;
+            }
+
+            .split-left .slogan {
+                font-size: 12px;
+                letter-spacing: 5px;
+                color: var(--text-muted);
+                margin-top: 25px;
+                text-transform: uppercase;
+                font-weight: 500;
+            }
+
+        .split-right {
+            flex: 0.60;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 12%;
+            position: relative;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(15px);
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.1s;
+        }
+
+        .delay-2 {
+            animation-delay: 0.2s;
+        }
+
+        .delay-3 {
+            animation-delay: 0.3s;
+        }
+
+        .delay-4 {
+            animation-delay: 0.4s;
+        }
+
+        .delay-5 {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .activation-header {
+            margin-bottom: 35px;
+        }
+
+        .activation-badge {
+            font-size: 11px;
+            color: var(--primary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: rgba(139, 92, 246, 0.1);
+            border-radius: 4px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .activation-title {
+            font-size: 34px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+            color: var(--text-main);
+        }
+
+        .activation-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+            max-width: 420px;
+        }
+
+        .input-icon-left {
+            position: absolute;
+            top: 50%;
+            left: 16px;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            display: flex;
+            transition: color 0.3s;
+            pointer-events: none;
+        }
+
+        .input-actions-right {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            transform: translateY(-50%);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+
+        .status-icon {
+            color: var(--border-color);
+            display: flex;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+            .status-icon.valid {
+                color: var(--success);
+                transform: scale(1.1);
+            }
+
+        .input {
+            width: 100%;
+            height: 52px;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-main);
+            padding: 0 48px 0 45px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+            .input::placeholder {
+                color: var(--text-muted);
+                font-weight: 400;
+                letter-spacing: normal;
+            }
+
+            .input:focus {
+                border-color: var(--primary);
+                background-color: rgba(139, 92, 246, 0.02);
+                box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+            }
+
+                .input:focus ~ .input-icon-left,
+                .input-group:focus-within .input-icon-left {
+                    color: var(--primary);
+                }
+
+        .shake {
+            animation: shake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+            border-color: var(--error) !important;
+        }
+
+        @keyframes shake {
+            10%, 90% {
+                transform: translate3d(-1px, 0, 0);
+            }
+
+            20%, 80% {
+                transform: translate3d(2px, 0, 0);
+            }
+
+            30%, 50%, 70% {
+                transform: translate3d(-4px, 0, 0);
+            }
+
+            40%, 60% {
+                transform: translate3d(4px, 0, 0);
+            }
+        }
+
+        .btn {
+            width: 100%;
+            max-width: 420px;
+            height: 52px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            border: none;
+            letter-spacing: 0.5px;
+        }
+
+            .btn:disabled {
+                opacity: 0.7;
+                cursor: not-allowed;
+                transform: none !important;
+            }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #FFFFFF;
+        }
+
+            .btn-primary:hover:not(:disabled) {
+                background-color: var(--primary-dark);
+                transform: translateY(-1px);
+            }
+
+            .btn-primary:active:not(:disabled) {
+                transform: translateY(1px);
+            }
+
+        .btn-secondary {
+            background-color: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+            .btn-secondary:hover {
+                background-color: var(--input-bg);
+            }
+
+        .divider {
+            max-width: 420px;
+            text-align: center;
+            position: relative;
+            margin: 20px 0;
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+            .divider::before,
+            .divider::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                width: 42%;
+                height: 1px;
+                background-color: var(--border-color);
+            }
+
+            .divider::before {
+                left: 0;
+            }
+
+            .divider::after {
+                right: 0;
+            }
+
+        .security-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            max-width: 420px;
+            margin-top: 25px;
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-left {
+            position: absolute;
+            bottom: 35px;
+            font-size: 12px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .footer-right {
+            position: absolute;
+            bottom: 35px;
+            font-size: 12px;
+        }
+
+            .footer-right a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color 0.2s;
+                border-bottom: 1px dashed var(--border-color);
+                padding-bottom: 2px;
+            }
+
+                .footer-right a:hover {
+                    color: var(--text-main);
+                    border-bottom-color: var(--text-main);
+                }
+
+        .error-msg {
+            display: none;
+            color: var(--error);
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 15px;
+            font-weight: 500;
+            max-width: 420px;
+        }
+
+            .error-msg.active {
+                display: block;
+            }
+    </style>
+</head>
+<body>
+    <div class="window-controls">
+        <button type="button" id="openSettingsBtn" class="control-btn" title="Configurações">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        </button>
+        <button type="button" id="minimizeBtn" class="control-btn" title="Minimizar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        </button>
+        <button type="button" id="closeAppBtn" class="control-btn close-btn" title="Fechar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+    </div>
+
+    <div id="settingsOverlay" class="settings-overlay">
+        <div class="settings-modal">
+            <div class="settings-header">
+                <h2>
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="12" cy="12" r="3"></circle></svg>
+                    Ajustes
+                </h2>
+                <button type="button" id="closeSettingsBtn" class="control-btn close-btn">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="settings-body">
+                <div class="setting-item">
+                    <div class="setting-info">
+                        <span class="setting-title">Tema claro</span>
+                        <span class="setting-desc">Alterna entre visual claro e escuro</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="loading" class="screen active">
+        <div class="x-mark pulse-anim">X</div>
+        <div class="progress-wrapper">
+            <div class="progress-track">
+                <div id="progressBar" class="progress-bar"></div>
+            </div>
+            <div id="loadingCounter" class="loading-counter">0%</div>
+        </div>
+        <div class="loading-status">
+            <div class="spinner"></div>
+            <span id="loadingText">Iniciando módulos de segurança...</span>
+        </div>
+    </div>
+
+    <div id="activation" class="screen">
+        <div class="split-left" id="splitLeft">
+            <div class="x-mark float-anim fade-up">X</div>
+            <div class="slogan fade-up delay-1">Ambiente Seguro</div>
+            <div class="footer-left fade-up delay-5">
+                <div style="padding: 10px; background: rgba(139, 92, 246, 0.1); border-radius: 8px; border: 1px solid var(--border-color);">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--primary);">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                </div>
+                <div>
+                    <div style="font-weight: 600; color: var(--text-main); font-size: 13px;">TeamX Shield</div>
+                    <div style="font-size: 11px; margin-top: 2px;">Proteção de licença ativa.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-right">
+            <div class="activation-header fade-up">
+                <div class="activation-badge">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    Autenticação Necessária
+                </div>
+                <h1 class="activation-title">Ativar Plataforma</h1>
+                <p class="activation-desc">Insira sua chave de produto para desbloquear o acesso premium.</p>
+            </div>
+
+            <div class="input-group fade-up delay-1">
+                <div class="input-icon-left">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"></path>
+                    </svg>
+                </div>
+                <input type="text" id="license" class="input" maxlength="29"
+                       placeholder="TX-XXXX-XXXX-XXXX-XXXX"
+                       autocomplete="off" spellcheck="false" autocapitalize="characters">
+                <div class="input-actions-right">
+                    <div class="status-icon" id="statusIcon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div id="errorMsg" class="error-msg fade-up delay-1">Chave inválida. Verifique o formato.</div>
+
+            <button type="button" id="activateBtn" class="btn btn-primary fade-up delay-2">
+                AUTENTICAR CHAVE
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </button>
+
+            <div class="divider fade-up delay-3">ou</div>
+
+            <button type="button" id="buyBtn" class="btn btn-secondary fade-up delay-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="9" cy="21" r="1"></circle>
+                    <circle cx="20" cy="21" r="1"></circle>
+                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+                </svg>
+                ADQUIRIR UMA LICENÇA
+            </button>
+
+            <div class="security-badges fade-up delay-4">
+                <div class="badge-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    SSL Secure
+                </div>
+                <div class="badge-item">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                    AES-256
+                </div>
+            </div>
+
+            <div class="footer-right fade-up delay-5">
+                <a href="#" id="supportLink">Centro de Suporte</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function () {
+            'use strict';
+
+            const BTN_DEFAULT_HTML =
+                'AUTENTICAR CHAVE <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+
+            function postToHost(message) {
+                try {
+                    if (window.chrome && window.chrome.webview && window.chrome.webview.postMessage) {
+                        window.chrome.webview.postMessage(message);
+                    }
+                } catch (_) { /* ignore */ }
+            }
+
+            function simulateLoading() {
+                const progressBar = document.getElementById('progressBar');
+                const loadingCounter = document.getElementById('loadingCounter');
+                const loadingText = document.getElementById('loadingText');
+                const texts = [
+                    'Iniciando módulos de segurança...',
+                    'Estabelecendo conexão segura...',
+                    'Verificando integridade local...',
+                    'Preparando interface...'
+                ];
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 12 + 8;
+                    if (progress > 100) progress = 100;
+                    progressBar.style.width = progress + '%';
+                    loadingCounter.textContent = Math.floor(progress) + '%';
+                    if (progress > 30) loadingText.textContent = texts[1];
+                    if (progress > 60) loadingText.textContent = texts[2];
+                    if (progress > 85) loadingText.textContent = texts[3];
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        setTimeout(() => {
+                            document.getElementById('loading').classList.remove('active');
+                            document.getElementById('activation').classList.add('active');
+                            const input = document.getElementById('license');
+                            if (input) input.focus();
+                        }, 400);
+                    }
+                }, 50);
+            }
+
+            /** Formata para TX-XXXX-XXXX-XXXX-XXXX (ou similar). */
+            function formatLicenseKey(input) {
+                let raw = (input.value || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+                if (raw.length > 22) raw = raw.substring(0, 22);
+
+                // Agrupa: prefixo 2 + blocos de 4
+                let parts = [];
+                if (raw.length <= 2) {
+                    parts = [raw];
+                } else {
+                    parts.push(raw.substring(0, 2));
+                    let rest = raw.substring(2);
+                    while (rest.length > 0) {
+                        parts.push(rest.substring(0, 4));
+                        rest = rest.substring(4);
+                    }
+                }
+
+                input.value = parts.filter(Boolean).join('-');
+
+                const statusIcon = document.getElementById('statusIcon');
+                const ok = raw.length >= 18;
+                if (statusIcon) {
+                    statusIcon.classList.toggle('valid', ok);
+                }
+            }
+
+            // Chamadas do C# (ExecuteScriptAsync)
+            window.setLoading = function (isLoading) {
+                const btn = document.getElementById('activateBtn');
+                const input = document.getElementById('license');
+                if (!btn) return;
+                if (isLoading) {
+                    btn.disabled = true;
+                    btn.innerHTML = 'AUTENTICANDO...';
+                    if (input) input.disabled = true;
+                } else {
+                    btn.disabled = false;
+                    btn.innerHTML = BTN_DEFAULT_HTML;
+                    if (input) input.disabled = false;
+                }
+            };
+
+            window.showSuccess = function () {
+                const btn = document.getElementById('activateBtn');
+                const input = document.getElementById('license');
+                const splitLeft = document.getElementById('splitLeft');
+                const err = document.getElementById('errorMsg');
+                if (err) err.classList.remove('active');
+                if (btn) {
+                    btn.innerHTML = 'SISTEMA ATIVADO';
+                    btn.style.backgroundColor = 'var(--success)';
+                    btn.disabled = true;
+                }
+                if (input) input.disabled = true;
+                if (splitLeft) splitLeft.classList.add('success-state');
+            };
+
+            window.showError = function (message) {
+                const errorMsg = document.getElementById('errorMsg');
+                const btn = document.getElementById('activateBtn');
+                const input = document.getElementById('license');
+                if (errorMsg) {
+                    errorMsg.textContent = message || 'Chave inválida. Verifique e tente novamente.';
+                    errorMsg.classList.add('active');
+                }
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerHTML = BTN_DEFAULT_HTML;
+                    btn.style.backgroundColor = '';
+                }
+                if (input) {
+                    input.disabled = false;
+                    input.classList.add('shake');
+                    setTimeout(() => input.classList.remove('shake'), 500);
+                    input.focus();
+                }
+            };
+
+            function submitActivate() {
+                const licenseInput = document.getElementById('license');
+                const key = (licenseInput.value || '').trim();
+                if (!key || key.replace(/-/g, '').length < 10) {
+                    window.showError('Digite uma chave válida.');
+                    return;
+                }
+                window.setLoading(true);
+                postToHost('activate:' + key);
+            }
+
+            document.addEventListener('DOMContentLoaded', () => {
+                // Tema salvo
+                try {
+                    const light = localStorage.getItem('teamx-theme') === 'light';
+                    const toggle = document.getElementById('themeToggle');
+                    if (light) document.body.classList.add('light-theme');
+                    if (toggle) toggle.checked = light;
+                } catch (_) { /* ignore */ }
+
+                simulateLoading();
+
+                const licenseInput = document.getElementById('license');
+                const activateBtn = document.getElementById('activateBtn');
+                const errorMsg = document.getElementById('errorMsg');
+
+                licenseInput.addEventListener('input', () => {
+                    formatLicenseKey(licenseInput);
+                    if (errorMsg) errorMsg.classList.remove('active');
+                });
+
+                licenseInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitActivate();
+                    }
+                });
+
+                activateBtn.addEventListener('click', submitActivate);
+
+                document.getElementById('buyBtn').addEventListener('click', () => postToHost('buy'));
+                document.getElementById('supportLink').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    postToHost('support');
+                });
+                document.getElementById('closeAppBtn').addEventListener('click', () => postToHost('close'));
+                document.getElementById('minimizeBtn').addEventListener('click', () => postToHost('minimize'));
+
+                const settingsOverlay = document.getElementById('settingsOverlay');
+                document.getElementById('openSettingsBtn').addEventListener('click', () => {
+                    settingsOverlay.classList.add('active');
+                });
+                document.getElementById('closeSettingsBtn').addEventListener('click', () => {
+                    settingsOverlay.classList.remove('active');
+                });
+                settingsOverlay.addEventListener('click', (e) => {
+                    if (e.target === settingsOverlay) settingsOverlay.classList.remove('active');
+                });
+
+                document.getElementById('themeToggle').addEventListener('change', (e) => {
+                    document.body.classList.toggle('light-theme', e.target.checked);
+                    try {
+                        localStorage.setItem('teamx-theme', e.target.checked ? 'light' : 'dark');
+                    } catch (_) { /* ignore */ }
+                });
+            });
+
+            // Bloqueio básico de menu / seleção
+            document.addEventListener('contextmenu', (e) => e.preventDefault(), true);
+            document.addEventListener('dragstart', (e) => e.preventDefault(), true);
+        })();
+    </script>
+</body>
+</html>

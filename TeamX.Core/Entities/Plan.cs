@@ -3,7 +3,7 @@
 public class Plan
 {
     /// <summary>
-    /// PK do plano. Mantido como PlanId para compatibilidade com o código existente.
+    /// PK do plano (nome PlanId por compatibilidade com EF/código atual).
     /// </summary>
     public Guid PlanId { get; set; }
 
@@ -13,12 +13,12 @@ public class Plan
     public string Name { get; set; } = string.Empty;
 
     /// <summary>
-    /// Código do variant no gateway (Eremby / webhook). Deve ser único.
+    /// Código do variant no gateway (Eremby). Único.
     /// </summary>
     public string Code { get; set; } = string.Empty;
 
     /// <summary>
-    /// Duração em dias. Ignorado quando <see cref="IsLifetime"/> é true.
+    /// Duração em dias. Ignorado se <see cref="IsLifetime"/> for true.
     /// </summary>
     public int DurationDays { get; set; }
 

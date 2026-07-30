@@ -1,8 +1,5 @@
 ﻿namespace TeamX.Shared.DTOs.Responses;
 
-/// <summary>
-/// Resposta padrão da API.
-/// </summary>
 public class ApiResponse<T>
 {
     public bool Success { get; set; }

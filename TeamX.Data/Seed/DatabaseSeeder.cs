@@ -5,16 +5,12 @@ using TeamX.Data.Context;
 
 namespace TeamX.Data.Seeders;
 
-/// <summary>
-/// Responsável por popular o banco de dados com dados iniciais (seed).
-/// </summary>
 public static class DatabaseSeeder
 {
     public static async Task SeedAsync(
         ApplicationDbContext db,
         CancellationToken cancellationToken = default)
     {
-        // Evita duplicar dados caso o seed já tenha sido executado
         if (await db.Products.AnyAsync(cancellationToken))
             return;
 
@@ -33,6 +29,7 @@ public static class DatabaseSeeder
             CreatedAt = now
         };
 
+        // Codes = variant IDs do Eremby (ajuste se o painel mudar)
         var plans = new[]
         {
             new Plan
@@ -78,7 +75,6 @@ public static class DatabaseSeeder
 
         db.Products.Add(product);
         db.Plans.AddRange(plans);
-
         await db.SaveChangesAsync(cancellationToken);
     }
 }

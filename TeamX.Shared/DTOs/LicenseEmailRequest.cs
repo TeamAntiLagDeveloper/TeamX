@@ -1,8 +1,5 @@
 ﻿namespace TeamX.Shared.DTOs;
 
-/// <summary>
-/// Dados necessários para envio do e-mail de licença.
-/// </summary>
 public class LicenseEmailRequest
 {
     public string CustomerEmail { get; set; } = string.Empty;

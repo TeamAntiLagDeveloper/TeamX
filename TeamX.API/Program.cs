@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
+using HealthChecks.NpgSql;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,6 @@ using TeamX.Data.Context;
 using TeamX.Data.Repositories;
 using TeamX.Data.Seeders;
 using TeamX.Security.Licensing;
-using HealthChecks.NpgSql;
 
 namespace TeamX.API;
 
@@ -21,23 +21,27 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        // ─── Serilog cedo (captura erros de startup) ───────────────
+        // Evita FileSystemWatcher / inotify no Linux (Render, etc.)
+        Environment.SetEnvironmentVariable("DOTNET_HOSTBUILDER_RELOADCONFIGONCHANGE", "false");
+
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.Configuration.Sources.Clear();
+        builder.Configuration
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
+            .AddJsonFile(
+                $"appsettings.{builder.Environment.EnvironmentName}.json",
+                optional: true,
+                reloadOnChange: false)
+            .AddEnvironmentVariables()
+            .AddUserSecrets(typeof(Program).Assembly, optional: true);
+
         Serilog.Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .CreateBootstrapLogger();
 
         try
         {
-            var builder = WebApplication.CreateBuilder(args);
-
-            // Remove as fontes padrão que ligam FileSystemWatcher (reloadOnChange = true)
-            builder.Configuration.Sources.Clear();
-
-            builder.Configuration
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
-                .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: false)
-                .AddEnvironmentVariables();
-
             builder.Host.UseSerilog((ctx, services, lc) => lc
                 .ReadFrom.Configuration(ctx.Configuration)
                 .ReadFrom.Services(services)
@@ -48,6 +52,8 @@ public class Program
                     "Logs/log-.txt",
                     rollingInterval: RollingInterval.Day,
                     retainedFileCountLimit: 30));
+
+            ValidateRequiredConfiguration(builder.Configuration, builder.Environment);
 
             // ─── Options ───────────────────────────────────────────
             builder.Services.Configure<JwtOptions>(
@@ -74,45 +80,52 @@ public class Program
             builder.Services.AddMemoryCache();
             builder.Services.AddProblemDetails();
 
-            // Health checks
-            
-            builder.Services.AddHealthChecks()
-                .AddNpgSql(
-                    builder.Configuration.GetConnectionString("DefaultConnection")
-                    ?? throw new InvalidOperationException("Connection string não configurada"),
-                    name: "postgres");
+            // ─── Health checks ─────────────────────────────────────
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+            var healthChecks = builder.Services.AddHealthChecks();
 
-            // ─── Forwarded headers (proxy / Docker / reverse proxy) ─
+            if (!string.IsNullOrWhiteSpace(connectionString))
+            {
+                healthChecks.AddNpgSql(connectionString, name: "postgres");
+            }
+            else
+            {
+                Serilog.Log.Warning("ConnectionStrings:DefaultConnection não configurada. Health check Postgres desabilitado.");
+            }
+
+            // ─── Forwarded headers ─────────────────────────────────
             builder.Services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
-                // Em produção com proxy conhecido, restrinja KnownNetworks / KnownProxies
                 options.KnownNetworks.Clear();
                 options.KnownProxies.Clear();
             });
 
             // ─── E-mail (Resend) ────────────────────────────────────
-            builder.Services.AddOptions();
             builder.Services.AddHttpClient<ResendClient>();
-            builder.Services.Configure<ResendClientOptions>(
-                builder.Configuration.GetSection("Resend"));
+            builder.Services.Configure<ResendClientOptions>(o =>
+            {
+                o.ApiToken = builder.Configuration["Resend:ApiToken"] ?? string.Empty;
+            });
             builder.Services.AddTransient<IResend, ResendClient>();
 
             // ─── Database ──────────────────────────────────────────
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
-                var cs = builder.Configuration.GetConnectionString("DefaultConnection")
-                    ?? throw new InvalidOperationException("Connection string não configurada");
+                var cs = builder.Configuration.GetConnectionString("DefaultConnection");
+                if (string.IsNullOrWhiteSpace(cs))
+                {
+                    throw new InvalidOperationException(
+                        "ConnectionStrings:DefaultConnection não configurada. " +
+                        "Use user-secrets (local) ou variáveis de ambiente (produção).");
+                }
 
                 options.UseNpgsql(cs, npgsql =>
                 {
                     npgsql.CommandTimeout(30);
                     npgsql.EnableRetryOnFailure(3);
                 });
-
-                if (builder.Environment.IsDevelopment())
-                    options.EnableSensitiveDataLogging(false);
             });
 
             // ─── Application services ──────────────────────────────
@@ -129,9 +142,7 @@ public class Program
             builder.Services.AddScoped<ILicenseKeyGenerator, LicenseKeyGenerator>();
             builder.Services.AddScoped<ITokenService, TokenService>();
 
-            // ─── Background jobs ───────────────────────────────────
             builder.Services.AddHostedService<AbuseScanBackgroundService>();
-            // Opcional: builder.Services.AddHostedService<NonceCleanupBackgroundService>();
 
             // ─── Rate limiting ─────────────────────────────────────
             builder.Services.AddRateLimiter(options =>
@@ -178,12 +189,9 @@ public class Program
                 });
             });
 
-            // URL: preferir ASPNETCORE_URLS / launchSettings em vez de hardcoded
-            // builder.WebHost.UseUrls("http://0.0.0.0:8080");
-
             var app = builder.Build();
 
-            // ─── Startup: migrate + seed ───────────────────────────
+            // ─── Migrate + seed ────────────────────────────────────
             using (var scope = app.Services.CreateScope())
             {
                 var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -203,7 +211,6 @@ public class Program
             }
 
             // ─── Pipeline ──────────────────────────────────────────
-            // ForwardedHeaders o mais cedo possível
             app.UseForwardedHeaders();
 
             if (app.Environment.IsDevelopment())
@@ -211,20 +218,10 @@ public class Program
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            else
-            {
-                // Em produção atrás de proxy, HTTPS redirection costuma ser do proxy
-                // app.UseHttpsRedirection();
-            }
 
             app.UseSerilogRequestLogging();
-
             app.UseMiddleware<ExceptionMiddleware>();
-
             app.UseRateLimiter();
-
-            // Se no futuro tiver auth JWT no pipeline:
-            // app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllers();
@@ -242,5 +239,54 @@ public class Program
         {
             await Serilog.Log.CloseAndFlushAsync();
         }
+    }
+
+    /// <summary>
+    /// Garante que segredos mínimos existem antes de subir a API.
+    /// </summary>
+    private static void ValidateRequiredConfiguration(
+        IConfiguration config,
+        IHostEnvironment env)
+    {
+        var errors = new List<string>();
+
+        if (string.IsNullOrWhiteSpace(config.GetConnectionString("DefaultConnection")))
+            errors.Add("ConnectionStrings:DefaultConnection");
+
+        var jwtSecret = config["Jwt:Secret"];
+        if (string.IsNullOrWhiteSpace(jwtSecret) || jwtSecret.Length < 32)
+            errors.Add("Jwt:Secret (mínimo 32 caracteres)");
+
+        var signingSecret = config["Activation:SigningSecret"];
+        if (string.IsNullOrWhiteSpace(signingSecret) || signingSecret.Length < 32)
+            errors.Add("Activation:SigningSecret (mínimo 32 caracteres)");
+
+        var webhookSecret = config["Eremby:WebhookSecret"];
+        if (string.IsNullOrWhiteSpace(webhookSecret))
+            errors.Add("Eremby:WebhookSecret");
+
+        // Em Development ainda exigimos — senão activate/webhook quebram em silêncio
+        if (errors.Count > 0)
+        {
+            var msg =
+                "Configuração incompleta. Defina via user-secrets ou variáveis de ambiente: " +
+                string.Join(", ", errors);
+
+            Serilog.Log.Fatal(msg);
+            throw new InvalidOperationException(msg);
+        }
+
+        // Avisos (não bloqueiam)
+        if (string.IsNullOrWhiteSpace(config["Resend:ApiToken"]))
+            Serilog.Log.Warning("Resend:ApiToken não configurado — e-mails de licença vão falhar.");
+
+        if (string.IsNullOrWhiteSpace(config["Admin:ApiKey"]) ||
+            (config["Admin:ApiKey"]?.Length ?? 0) < 16)
+        {
+            Serilog.Log.Warning("Admin:ApiKey fraca ou ausente — POST /api/license/create ficará bloqueado.");
+        }
+
+        if (env.IsProduction() && string.IsNullOrWhiteSpace(config["Admin:ApiKey"]))
+            Serilog.Log.Warning("Produção sem Admin:ApiKey — endpoint create admin indisponível (esperado se só usar webhook).");
     }
 }

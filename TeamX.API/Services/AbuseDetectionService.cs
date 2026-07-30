@@ -11,8 +11,8 @@ public class AbuseDetectionOptions
 
     public int MaxDistinctHardwareIn24h { get; set; } = 8;
     public int MaxDistinctIpIn24h { get; set; } = 15;
-    public int DeviceMargin { get; set; } = 2;          // margem para race conditions
-    public int HardwareMultiplier { get; set; } = 3;    // maxAllowed * 3
+    public int DeviceMargin { get; set; } = 2;
+    public int HardwareMultiplier { get; set; } = 3;
 }
 
 public class AbuseDetectionService
@@ -50,7 +50,6 @@ public class AbuseDetectionService
 
         var since = DateTime.UtcNow.AddHours(-24);
 
-        // Agregações feitas no banco (muito mais eficiente)
         var stats = await _context.LicenseAuditLogs
             .Where(x => x.LicenseId == licenseId && x.CreatedAt >= since)
             .GroupBy(_ => 1)
@@ -82,7 +81,6 @@ public class AbuseDetectionService
         if (!isAbuse)
             return;
 
-        // Usa tracking apenas no momento de atualizar
         await using var transaction = await _context.Database.BeginTransactionAsync(ct);
 
         try
@@ -97,13 +95,15 @@ public class AbuseDetectionService
             }
 
             licenseToUpdate.Status = "Suspended";
+            licenseToUpdate.UpdatedAt = DateTime.UtcNow;
 
             _context.LicenseAuditLogs.Add(new LicenseAuditLog
             {
                 Id = Guid.NewGuid(),
                 LicenseId = licenseId,
                 EventType = "Abuse",
-                Details = $"HW24h={distinctHw}; IP24h={distinctIp}; ActiveDevices={activeDevices}; MaxDevices={maxAllowed}",
+                Details =
+                    $"HW24h={distinctHw}; IP24h={distinctIp}; ActiveDevices={activeDevices}; MaxDevices={maxAllowed}",
                 CreatedAt = DateTime.UtcNow
             });
 
@@ -130,17 +130,29 @@ public class AbuseDetectionService
         string? details = null,
         CancellationToken ct = default)
     {
-        _context.LicenseAuditLogs.Add(new LicenseAuditLog
+        try
         {
-            Id = Guid.NewGuid(),
-            LicenseId = licenseId,
-            EventType = eventType,
-            HardwareId = hardwareId,
-            IpAddress = ip,
-            Details = details,
-            CreatedAt = DateTime.UtcNow
-        });
+            _context.LicenseAuditLogs.Add(new LicenseAuditLog
+            {
+                Id = Guid.NewGuid(),
+                LicenseId = licenseId,
+                EventType = eventType,
+                HardwareId = hardwareId,
+                IpAddress = ip,
+                Details = details,
+                CreatedAt = DateTime.UtcNow
+            });
 
-        await _context.SaveChangesAsync(ct);
+            await _context.SaveChangesAsync(ct);
+        }
+        catch (Exception ex)
+        {
+            // Auditoria nunca deve derrubar activate/heartbeat
+            _logger.LogWarning(
+                ex,
+                "Falha ao gravar audit log. LicenseId={LicenseId} Event={Event}",
+                licenseId,
+                eventType);
+        }
     }
 }

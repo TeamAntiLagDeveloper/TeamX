@@ -2,9 +2,6 @@
 
 namespace TeamX.Core.Interfaces;
 
-/// <summary>
-/// Repositório de acesso a dados de licenças.
-/// </summary>
 public interface ILicenseRepository
 {
     Task<License?> GetByKeyAsync(

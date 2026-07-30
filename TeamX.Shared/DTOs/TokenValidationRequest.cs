@@ -1,8 +1,5 @@
 ﻿namespace TeamX.Shared.DTOs;
 
-/// <summary>
-/// Request de validação de token.
-/// </summary>
 public class TokenValidationRequest
 {
     public string Token { get; set; } = string.Empty;

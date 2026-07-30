@@ -1,8 +1,5 @@
 ﻿namespace TeamX.Shared.DTOs;
 
-/// <summary>
-/// Request seguro de ativação (com assinatura, nonce e fingerprint).
-/// </summary>
 public class SecureActivateRequest
 {
     public string LicenseKey { get; set; } = string.Empty;

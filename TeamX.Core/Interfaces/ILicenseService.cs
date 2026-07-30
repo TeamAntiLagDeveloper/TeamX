@@ -3,9 +3,6 @@ using TeamX.Shared.DTOs;
 
 namespace TeamX.Core.Interfaces;
 
-/// <summary>
-/// Serviço de domínio responsável pelas operações principais de licenças.
-/// </summary>
 public interface ILicenseService
 {
     Task<License> CreateLicenseAsync(

@@ -1,8 +1,5 @@
 ﻿namespace TeamX.Shared.DTOs;
 
-/// <summary>
-/// Request para criação de uma nova licença.
-/// </summary>
 public class CreateLicenseRequest
 {
     public Guid CustomerId { get; set; }

@@ -13,14 +13,10 @@ public static class SystemConstants
     public const string SupportUrl = "https://teamantilag.com/support";
 
     /// <summary>
-    /// Versão do cliente. Formato: MAJOR.MINOR.PATCH
-    /// Deve ser atualizada a cada release (e alinhada ao assembly, se possível).
+    /// Versão do cliente (MAJOR.MINOR.PATCH). Atualize a cada release.
     /// </summary>
     public const string CurrentVersion = "1.0.0";
 
-    /// <summary>
-    /// User-Agent enviado pelo app desktop.
-    /// </summary>
     public const string UserAgent = ProductName + "/" + CurrentVersion;
 
     /// <summary>

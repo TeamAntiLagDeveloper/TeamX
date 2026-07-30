@@ -8,7 +8,7 @@ public class LicenseDevice
     public License License { get; set; } = null!;
 
     /// <summary>
-    /// Fingerprint de hardware (hash). Comparação case-insensitive no app.
+    /// Fingerprint de hardware (hash SHA-256 hex).
     /// </summary>
     public string HardwareId { get; set; } = null!;
 

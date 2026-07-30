@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using TeamX.Shared.DTOs.Health;
 using TeamX.Shared.DTOs.Responses;
 
@@ -13,21 +14,26 @@ namespace TeamX.API.Controllers;
 public class HealthController : ControllerBase
 {
     /// <summary>
-    /// Verifica o status de saúde da API.
+    /// Verifica o status de saúde da API (liveness simples).
+    /// Para readiness com Postgres use GET /health (MapHealthChecks).
     /// </summary>
-    /// <returns>Status de saúde da aplicação.</returns>
-    /// <response code="200">API está saudável.</response>
     [HttpGet]
     [ProducesResponseType(typeof(ApiResponse<HealthResponse>), StatusCodes.Status200OK)]
     public IActionResult Get()
     {
+        var version = Assembly.GetExecutingAssembly()
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion
+            ?? Assembly.GetExecutingAssembly().GetName().Version?.ToString()
+            ?? "1.0.0";
+
         var response = new HealthResponse
         {
+            Name = "TeamX API",
+            Version = version,
             Status = "Healthy",
+            ServerTime = DateTime.UtcNow,
             Timestamp = DateTime.UtcNow
-            // Adicione outras propriedades relevantes do seu DTO se existirem
-            // Version = Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
-            // Environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT")
         };
 
         return Ok(ApiResponse<HealthResponse>.Ok(response));

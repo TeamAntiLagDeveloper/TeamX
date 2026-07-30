@@ -77,7 +77,9 @@ public class TokenService : ITokenService
         {
             new Claim(JwtRegisteredClaimNames.Sub, license.Key),
             new Claim(JwtRegisteredClaimNames.Jti, jti),
-            new Claim(JwtRegisteredClaimNames.Iat, new DateTimeOffset(now).ToUnixTimeSeconds().ToString(), ClaimValueTypes.Integer64),
+            new Claim(JwtRegisteredClaimNames.Iat,
+                new DateTimeOffset(now).ToUnixTimeSeconds().ToString(),
+                ClaimValueTypes.Integer64),
             new Claim("HardwareFingerprint", hardwareFingerprint.Trim()),
             new Claim("LicenseId", license.Id.ToString()),
             new Claim("MaxDevices", maxDevices.ToString())
@@ -88,7 +90,7 @@ public class TokenService : ITokenService
             audience: _jwt.Audience,
             claims: claims,
             notBefore: now,
-            expires: now.AddDays(_jwt.ExpirationDays),
+            expires: now.AddDays(Math.Max(_jwt.ExpirationDays, 1)),
             signingCredentials: _credentials);
 
         return _handler.WriteToken(token);
@@ -109,11 +111,13 @@ public class TokenService : ITokenService
 
             var principal = _handler.ValidateToken(token, _validationParameters, out var validatedToken);
 
-            if (validatedToken is not JwtSecurityToken jwt)
+            if (validatedToken is not JwtSecurityToken)
                 return Fail("Token inválido.");
 
+            var hw = hardwareFingerprint.Trim();
             var storedHardware = GetClaim(principal, "HardwareFingerprint");
-            if (!string.Equals(storedHardware, hardwareFingerprint.Trim(), StringComparison.OrdinalIgnoreCase))
+
+            if (!string.Equals(storedHardware, hw, StringComparison.OrdinalIgnoreCase))
                 return Fail("Dispositivo não autorizado.");
 
             if (!int.TryParse(GetClaim(principal, "LicenseId"), out var licenseId))
@@ -149,7 +153,7 @@ public class TokenService : ITokenService
                 .AnyAsync(d =>
                     d.LicenseId == licenseId &&
                     d.IsActive &&
-                    d.HardwareId == hardwareFingerprint.Trim(),
+                    d.HardwareId == hw,
                     ct);
 
             if (!deviceActive)
@@ -190,7 +194,6 @@ public class TokenService : ITokenService
         {
             var jwt = _handler.ReadJwtToken(token);
             var jti = jwt.Id;
-
             if (string.IsNullOrEmpty(jti))
                 return;
 
@@ -210,12 +213,10 @@ public class TokenService : ITokenService
             });
 
             await _context.SaveChangesAsync(ct);
-
             _logger.LogInformation("Token revogado. Jti={Jti}", jti);
         }
         catch (Exception ex)
         {
-            // Token malformado — não interrompe o fluxo do caller
             _logger.LogDebug(ex, "Não foi possível revogar token (malformado?)");
         }
     }
@@ -229,7 +230,6 @@ public class TokenService : ITokenService
         {
             var jwt = _handler.ReadJwtToken(token);
             var jti = jwt.Id;
-
             if (string.IsNullOrEmpty(jti))
                 return true;
 
@@ -239,11 +239,9 @@ public class TokenService : ITokenService
         }
         catch
         {
-            return true; // token ilegível → trata como revogado
+            return true;
         }
     }
-
-    // ─── Helpers ─────────────────────────────────────────────────
 
     private static string? GetClaim(ClaimsPrincipal principal, string type)
         => principal.FindFirstValue(type);
